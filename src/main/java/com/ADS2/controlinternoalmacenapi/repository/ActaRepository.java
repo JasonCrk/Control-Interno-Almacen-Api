@@ -1,10 +1,10 @@
 package com.ADS2.controlinternoalmacenapi.repository;
 
-import com.ADS2.controlinternoalmacenapi.model.InformeFaltantes;
+import com.ADS2.controlinternoalmacenapi.model.Acta;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface InformeFaltantesRepository extends JpaRepository<InformeFaltantes, Long> {
+public interface ActaRepository extends JpaRepository<Acta, Long> {
 }

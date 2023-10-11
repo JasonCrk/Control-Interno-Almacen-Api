@@ -53,13 +53,10 @@ public class Usuario implements UserDetails {
     private List<Memorandum> memorandums;
 
     @OneToMany(mappedBy = "user")
-    private List<InformeSustentoDiferencias> informeSustentoDiferencias;
+    private List<Informe> informes;
 
     @OneToMany(mappedBy = "user")
-    private List<InformeFaltantes> informeFaltantes;
-
-    @OneToMany(mappedBy = "user")
-    private List<ActaInventario> actaInventarios;
+    private List<Acta> actas;
 
     @OneToMany(mappedBy = "user")
     private List<Token> tokens;

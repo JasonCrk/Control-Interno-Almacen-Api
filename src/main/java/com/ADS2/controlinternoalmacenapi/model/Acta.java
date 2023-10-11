@@ -1,5 +1,7 @@
 package com.ADS2.controlinternoalmacenapi.model;
 
+import com.ADS2.controlinternoalmacenapi.model.enums.ActaType;
+
 import jakarta.persistence.*;
 
 import lombok.AllArgsConstructor;
@@ -12,12 +14,12 @@ import org.springframework.data.annotation.CreatedDate;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "informe_sustento_diferencias")
+@Table(name = "acta")
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Data
-public class InformeSustentoDiferencias {
+public class Acta {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,6 +30,9 @@ public class InformeSustentoDiferencias {
 
     @Column(nullable = false)
     private String documentUrl;
+
+    @Enumerated(EnumType.STRING)
+    private ActaType type;
 
     @CreatedDate
     @Builder.Default

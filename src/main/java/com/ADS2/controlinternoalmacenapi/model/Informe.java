@@ -1,23 +1,23 @@
 package com.ADS2.controlinternoalmacenapi.model;
 
+import com.ADS2.controlinternoalmacenapi.model.enums.InformeType;
 import jakarta.persistence.*;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "acta_inventario")
+@Table(name = "informe")
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Data
-public class ActaInventario {
+public class Informe {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,6 +28,9 @@ public class ActaInventario {
 
     @Column(nullable = false)
     private String documentUrl;
+
+    @Enumerated(EnumType.STRING)
+    private InformeType type;
 
     @CreatedDate
     @Builder.Default

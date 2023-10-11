@@ -1,6 +1,7 @@
 package com.ADS2.controlinternoalmacenapi.model;
 
 import com.ADS2.controlinternoalmacenapi.model.enums.MemorandumStatus;
+import com.ADS2.controlinternoalmacenapi.model.enums.MemorandumType;
 
 import jakarta.persistence.*;
 
@@ -33,6 +34,9 @@ public class Memorandum {
 
     @Column(nullable = false)
     private String documentUrl;
+
+    @Enumerated(EnumType.STRING)
+    private MemorandumType type;
 
     @CreatedDate
     @Builder.Default
