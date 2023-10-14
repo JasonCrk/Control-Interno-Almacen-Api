@@ -4,6 +4,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(path = "/api/informe-faltantes")
-public class InformeFaltantesController {
+@RequestMapping(path = "/api/actas")
+public class ActaController {
 }
