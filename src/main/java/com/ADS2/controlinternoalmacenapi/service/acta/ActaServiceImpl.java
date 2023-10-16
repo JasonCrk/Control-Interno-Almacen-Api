@@ -7,13 +7,17 @@ import com.ADS2.controlinternoalmacenapi.model.Usuario;
 import com.ADS2.controlinternoalmacenapi.model.enums.ActaType;
 import com.ADS2.controlinternoalmacenapi.repository.ActaRepository;
 import com.ADS2.controlinternoalmacenapi.request.CrearActaRequest;
+import com.ADS2.controlinternoalmacenapi.response.ListResponse;
 import com.ADS2.controlinternoalmacenapi.response.MessageResponse;
+import com.ADS2.controlinternoalmacenapi.response.acta.ActaMapper;
+import com.ADS2.controlinternoalmacenapi.response.acta.ActaResponse;
 
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -35,6 +39,12 @@ public class ActaServiceImpl implements ActaService {
         this.saveActa(acta, request);
 
         return new MessageResponse("El acta se ha guardado exitosamente");
+    }
+
+    @Override
+    public ListResponse<ActaResponse> listarActasDeInventario() {
+        List<Acta> actas = this.actaRepository.findByOrderByCreatedAtDesc();
+        return new ListResponse<>(ActaMapper.INSTANCE.toList(actas));
     }
 
     private void saveActa(Acta acta, CrearActaRequest request) {

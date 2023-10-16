@@ -2,7 +2,9 @@ package com.ADS2.controlinternoalmacenapi.controller;
 
 import com.ADS2.controlinternoalmacenapi.model.Usuario;
 import com.ADS2.controlinternoalmacenapi.request.CrearActaRequest;
+import com.ADS2.controlinternoalmacenapi.response.ListResponse;
 import com.ADS2.controlinternoalmacenapi.response.MessageResponse;
+import com.ADS2.controlinternoalmacenapi.response.acta.ActaResponse;
 import com.ADS2.controlinternoalmacenapi.service.acta.ActaService;
 
 import jakarta.validation.Valid;
@@ -20,6 +22,11 @@ public class ActaController {
 
     @Autowired
     private ActaService actaService;
+
+    @GetMapping(path = "/inventario")
+    public ResponseEntity<ListResponse<ActaResponse>> listarActasDeInventario() {
+        return ResponseEntity.ok(this.actaService.listarActasDeInventario());
+    }
 
     @PostMapping(path = "/entrega-productos-sin-fines-lucro")
     public ResponseEntity<MessageResponse> crearActaDeEntregaDeProductosSinFinesDeLucro(
