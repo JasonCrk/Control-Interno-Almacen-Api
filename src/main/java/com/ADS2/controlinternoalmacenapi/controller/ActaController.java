@@ -28,6 +28,17 @@ public class ActaController {
         return ResponseEntity.ok(this.actaService.listarActasDeInventario());
     }
 
+    @PostMapping(path = "/inventario")
+    public ResponseEntity<MessageResponse> crearActaDeInventario(
+            @Valid CrearActaRequest request,
+            @RequestAttribute("user") Usuario user
+    ) {
+        return new ResponseEntity<>(
+                this.actaService.crearActaDeInventario(request, user),
+                HttpStatus.CREATED
+        );
+    }
+
     @PostMapping(path = "/entrega-productos-sin-fines-lucro")
     public ResponseEntity<MessageResponse> crearActaDeEntregaDeProductosSinFinesDeLucro(
             @Valid CrearActaRequest request,
