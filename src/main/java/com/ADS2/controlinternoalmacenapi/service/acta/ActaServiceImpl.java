@@ -28,6 +28,12 @@ public class ActaServiceImpl implements ActaService {
     private final FirebaseStorageService storageService;
 
     @Override
+    public ListResponse<ActaResponse> listarActasDeInventario() {
+        List<Acta> actas = this.actaRepository.findByOrderByCreatedAtDesc();
+        return new ListResponse<>(ActaMapper.INSTANCE.toList(actas));
+    }
+
+    @Override
     public MessageResponse crearActaDeEntregaDeProductosSinFinesDeLucro(
             CrearActaRequest request,
             Usuario user
@@ -42,9 +48,14 @@ public class ActaServiceImpl implements ActaService {
     }
 
     @Override
-    public ListResponse<ActaResponse> listarActasDeInventario() {
-        List<Acta> actas = this.actaRepository.findByOrderByCreatedAtDesc();
-        return new ListResponse<>(ActaMapper.INSTANCE.toList(actas));
+    public MessageResponse crearActaDeInventario(CrearActaRequest request, Usuario user) {
+        Acta acta = new Acta();
+        acta.setUser(user);
+        acta.setType(ActaType.INVENTARIO);
+
+        this.saveActa(acta, request);
+
+        return new MessageResponse("El acta se ha guardado exitosamente");
     }
 
     private void saveActa(Acta acta, CrearActaRequest request) {

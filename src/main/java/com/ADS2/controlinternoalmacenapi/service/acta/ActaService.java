@@ -7,6 +7,7 @@ import com.ADS2.controlinternoalmacenapi.response.MessageResponse;
 import com.ADS2.controlinternoalmacenapi.response.acta.ActaResponse;
 
 public interface ActaService {
-    MessageResponse crearActaDeEntregaDeProductosSinFinesDeLucro(CrearActaRequest request, Usuario user);
     ListResponse<ActaResponse> listarActasDeInventario();
+    MessageResponse crearActaDeEntregaDeProductosSinFinesDeLucro(CrearActaRequest request, Usuario user);
+    MessageResponse crearActaDeInventario(CrearActaRequest request, Usuario user);
 }
