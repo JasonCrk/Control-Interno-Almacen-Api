@@ -43,4 +43,9 @@ public class Memorandum {
     @CreatedDate
     @Builder.Default
     private LocalDateTime createdAt = LocalDateTime.now();
+
+    @Builder.Default
+    @ManyToOne
+    @JoinColumn
+    private Usuario assigned = null;
 }

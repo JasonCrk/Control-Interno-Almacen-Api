@@ -52,6 +52,9 @@ public class Usuario implements UserDetails {
     @OneToMany(mappedBy = "user")
     private List<Token> tokens;
 
+    @OneToMany(mappedBy = "assigned")
+    private List<Memorandum> assignedMemorandums;
+
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Role role;
