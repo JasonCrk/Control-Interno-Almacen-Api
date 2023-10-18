@@ -1,5 +1,6 @@
 package com.ADS2.controlinternoalmacenapi.exception;
 
+import com.ADS2.controlinternoalmacenapi.response.ErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;

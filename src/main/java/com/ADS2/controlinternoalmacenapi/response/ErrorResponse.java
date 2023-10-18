@@ -1,4 +1,4 @@
-package com.ADS2.controlinternoalmacenapi.exception;
+package com.ADS2.controlinternoalmacenapi.response;
 
 import lombok.Data;
 
