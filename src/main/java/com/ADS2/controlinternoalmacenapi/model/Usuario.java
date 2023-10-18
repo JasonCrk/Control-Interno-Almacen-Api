@@ -50,15 +50,6 @@ public class Usuario implements UserDetails {
     private String phoneNumber;
 
     @OneToMany(mappedBy = "user")
-    private List<Memorandum> memorandums;
-
-    @OneToMany(mappedBy = "user")
-    private List<Informe> informes;
-
-    @OneToMany(mappedBy = "user")
-    private List<Acta> actas;
-
-    @OneToMany(mappedBy = "user")
     private List<Token> tokens;
 
     @Column(nullable = false)

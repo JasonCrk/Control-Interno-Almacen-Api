@@ -1,6 +1,5 @@
 package com.ADS2.controlinternoalmacenapi.controller;
 
-import com.ADS2.controlinternoalmacenapi.model.Usuario;
 import com.ADS2.controlinternoalmacenapi.request.CrearActaRequest;
 import com.ADS2.controlinternoalmacenapi.response.ListResponse;
 import com.ADS2.controlinternoalmacenapi.response.MessageResponse;
@@ -30,22 +29,20 @@ public class ActaController {
 
     @PostMapping(path = "/inventario")
     public ResponseEntity<MessageResponse> crearActaDeInventario(
-            @Valid CrearActaRequest request,
-            @RequestAttribute("user") Usuario user
+            @Valid CrearActaRequest request
     ) {
         return new ResponseEntity<>(
-                this.actaService.crearActaDeInventario(request, user),
+                this.actaService.crearActaDeInventario(request),
                 HttpStatus.CREATED
         );
     }
 
     @PostMapping(path = "/entrega-productos-sin-fines-lucro")
     public ResponseEntity<MessageResponse> crearActaDeEntregaDeProductosSinFinesDeLucro(
-            @Valid CrearActaRequest request,
-            @RequestAttribute("user") Usuario user
+            @Valid CrearActaRequest request
     ) {
         return new ResponseEntity<>(
-                this.actaService.crearActaDeEntregaDeProductosSinFinesDeLucro(request, user),
+                this.actaService.crearActaDeEntregaDeProductosSinFinesDeLucro(request),
                 HttpStatus.CREATED
         );
     }

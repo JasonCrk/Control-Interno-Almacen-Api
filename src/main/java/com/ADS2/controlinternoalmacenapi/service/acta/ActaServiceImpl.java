@@ -3,7 +3,6 @@ package com.ADS2.controlinternoalmacenapi.service.acta;
 import com.ADS2.controlinternoalmacenapi.exception.FileUploadFailedException;
 import com.ADS2.controlinternoalmacenapi.firebase.FirebaseStorageService;
 import com.ADS2.controlinternoalmacenapi.model.Acta;
-import com.ADS2.controlinternoalmacenapi.model.Usuario;
 import com.ADS2.controlinternoalmacenapi.model.enums.ActaType;
 import com.ADS2.controlinternoalmacenapi.repository.ActaRepository;
 import com.ADS2.controlinternoalmacenapi.request.CrearActaRequest;
@@ -34,12 +33,8 @@ public class ActaServiceImpl implements ActaService {
     }
 
     @Override
-    public MessageResponse crearActaDeEntregaDeProductosSinFinesDeLucro(
-            CrearActaRequest request,
-            Usuario user
-    ) {
+    public MessageResponse crearActaDeEntregaDeProductosSinFinesDeLucro(CrearActaRequest request) {
         Acta acta = new Acta();
-        acta.setUser(user);
         acta.setType(ActaType.ENTREGA_PRODUCTOS_SIN_FINES_LUCRO);
 
         this.saveActa(acta, request);
@@ -48,9 +43,8 @@ public class ActaServiceImpl implements ActaService {
     }
 
     @Override
-    public MessageResponse crearActaDeInventario(CrearActaRequest request, Usuario user) {
+    public MessageResponse crearActaDeInventario(CrearActaRequest request) {
         Acta acta = new Acta();
-        acta.setUser(user);
         acta.setType(ActaType.INVENTARIO);
 
         this.saveActa(acta, request);

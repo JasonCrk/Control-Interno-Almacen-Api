@@ -37,8 +37,4 @@ public class Acta {
     @CreatedDate
     @Builder.Default
     private LocalDateTime createdAt = LocalDateTime.now();
-
-    @ManyToOne
-    @JoinColumn(name = "usuario_id")
-    private Usuario user;
 }

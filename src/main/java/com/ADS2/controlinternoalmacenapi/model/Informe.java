@@ -1,12 +1,14 @@
 package com.ADS2.controlinternoalmacenapi.model;
 
 import com.ADS2.controlinternoalmacenapi.model.enums.InformeType;
+
 import jakarta.persistence.*;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDateTime;
@@ -35,8 +37,4 @@ public class Informe {
     @CreatedDate
     @Builder.Default
     private LocalDateTime createdAt = LocalDateTime.now();
-
-    @ManyToOne
-    @JoinColumn(name = "usuario_id")
-    private Usuario user;
 }
