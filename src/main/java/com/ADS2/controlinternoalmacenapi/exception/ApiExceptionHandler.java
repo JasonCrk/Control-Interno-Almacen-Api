@@ -14,6 +14,18 @@ import java.util.Map;
 @ControllerAdvice
 public class ApiExceptionHandler {
 
+    @ExceptionHandler(NotFoundException.class)
+    public ResponseEntity<ErrorResponse> handlerNotFoundException(
+            NotFoundException ex,
+            WebRequest request
+    ) {
+        ErrorResponse errorResponse = new ErrorResponse();
+        errorResponse.setMessage(ex.getMessage());
+        errorResponse.setStatusCode(HttpStatus.NOT_FOUND.value());
+
+        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+    }
+
     @ExceptionHandler(NotAuthenticatedException.class)
     public ResponseEntity<ErrorResponse> handlerNotAuthenticatedException(
             NotAuthenticatedException ex,
