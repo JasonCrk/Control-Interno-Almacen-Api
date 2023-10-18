@@ -1,6 +1,6 @@
 package com.ADS2.controlinternoalmacenapi.service.auth;
 
-import com.ADS2.controlinternoalmacenapi.dto.auth.LoginDTO;
+import com.ADS2.controlinternoalmacenapi.request.LoginRequest;
 import com.ADS2.controlinternoalmacenapi.exception.InvalidJwtException;
 import com.ADS2.controlinternoalmacenapi.exception.NotAuthenticatedException;
 import com.ADS2.controlinternoalmacenapi.model.Token;
@@ -32,7 +32,7 @@ public class AuthServiceImpl implements AuthService {
     private final AuthenticationManager authenticationManager;
 
     @Override
-    public JwtResponse login(LoginDTO loginData) {
+    public JwtResponse login(LoginRequest loginData) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         loginData.getEmail(),

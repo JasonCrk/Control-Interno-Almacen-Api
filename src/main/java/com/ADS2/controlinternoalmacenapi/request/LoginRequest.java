@@ -1,4 +1,4 @@
-package com.ADS2.controlinternoalmacenapi.dto.auth;
+package com.ADS2.controlinternoalmacenapi.request;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class LoginDTO {
+public class LoginRequest {
 
     @Email(message = "The email is invalid")
     @NotBlank(message = "The email is required")

@@ -1,6 +1,6 @@
 package com.ADS2.controlinternoalmacenapi.controller;
 
-import com.ADS2.controlinternoalmacenapi.dto.auth.LoginDTO;
+import com.ADS2.controlinternoalmacenapi.request.LoginRequest;
 import com.ADS2.controlinternoalmacenapi.response.auth.JwtResponse;
 import com.ADS2.controlinternoalmacenapi.service.auth.AuthService;
 
@@ -26,7 +26,7 @@ public class AuthController {
 
     @PostMapping(path = "/login")
     public ResponseEntity<JwtResponse> login(
-            @Valid @RequestBody LoginDTO loginData
+            @Valid @RequestBody LoginRequest loginData
     ) {
         return new ResponseEntity<>(this.authService.login(loginData), HttpStatus.OK);
     }
