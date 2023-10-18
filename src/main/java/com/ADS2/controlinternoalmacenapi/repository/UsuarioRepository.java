@@ -15,6 +15,8 @@ import java.util.Optional;
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     Optional<Usuario> findByEmail(String email);
 
+    Optional<Usuario> findByIdAndRole(Long userId, Role role);
+
     @Query(value = """
             SELECT u FROM Usuario u WHERE\s
             u.role = :role AND\s

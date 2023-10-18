@@ -86,4 +86,16 @@ public class ApiExceptionHandler {
 
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(UnexpectedValueException.class)
+    public ResponseEntity<ErrorResponse> handlerUnexpectedValueException(
+            UnexpectedValueException ex,
+            WebRequest request
+    ) {
+        ErrorResponse errorResponse = new ErrorResponse();
+        errorResponse.setMessage(ex.getMessage());
+        errorResponse.setStatusCode(HttpStatus.BAD_REQUEST.value());
+
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+    }
 }
