@@ -10,4 +10,8 @@ public enum MemorandumStatus {
     private MemorandumStatus(String name) {
         this.name = name;
     }
+
+    public String getName() {
+        return this.name;
+    }
 }

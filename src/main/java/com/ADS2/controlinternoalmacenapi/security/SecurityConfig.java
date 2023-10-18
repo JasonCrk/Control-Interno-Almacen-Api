@@ -42,7 +42,8 @@ public class SecurityConfig {
                                 "/api/auth/**"
                         ).permitAll()
                         .requestMatchers(
-                                "/api/usuarios/analistas"
+                                "/api/usuarios/analistas",
+                                "/api/memorandums/{memorandumId}"
                         ).hasAnyAuthority(Role.JEFE_UNIDAD_FINANZAS.name(), Role.ADMIN.name())
                         .requestMatchers(
                                 HttpMethod.GET,
