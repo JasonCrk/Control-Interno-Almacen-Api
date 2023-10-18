@@ -29,7 +29,9 @@ public class Memorandum {
     @Column(nullable = false)
     private String title;
 
+    @Builder.Default
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false, columnDefinition = "VARCHAR(100) DEFAULT 'PENDIENTE'")
     private MemorandumStatus status = MemorandumStatus.PENDIENTE;
 
     @Column(nullable = false)
