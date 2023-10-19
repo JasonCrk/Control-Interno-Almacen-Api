@@ -18,14 +18,14 @@ public class MemorandumController {
     @Autowired
     private MemorandumService memorandumService;
 
-    @GetMapping(path = "/{memorandumId}")
+    @GetMapping(path = "/designacion/{memorandumId}")
     public ResponseEntity<MemorandumDetails> obtenerMemorandumDeDesignacion(
             @PathVariable("memorandumId") Long memorandumId
     ) {
         return ResponseEntity.ok(this.memorandumService.obtenerMemorandumDeDesignacion(memorandumId));
     }
 
-    @PostMapping(path = "/{memorandumId}/asignar-analista")
+    @PostMapping(path = "/solicitud-designacion/{memorandumId}/asignar-analista")
     public ResponseEntity<MessageResponse> asignarAnalistaAMemorandumDeSolicitudDeDesignacion(
             @PathVariable("memorandumId") Long memorandumId,
             @Valid @RequestBody AsignarAnalistaRequest request
