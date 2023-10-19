@@ -66,6 +66,10 @@ public class SecurityConfig {
                                 "/api/actas/entrega-productos-sin-fines-lucro",
                                 "/api/informes/sustento-diferencias"
                         ).hasAnyAuthority(Role.TECNICO_ADMINISTRATIVO_ALMACEN.name(), Role.ADMIN.name())
+                        .requestMatchers(
+                                HttpMethod.PUT,
+                                "/api/memorandums/solicitud-designacion/{memorandumId}"
+                        ).hasAnyAuthority(Role.TECNICO_ADMINISTRATIVO_LOGISTICA.name(), Role.ADMIN.name())
                         .anyRequest().hasAnyAuthority(Role.ADMIN.name())
                 )
                 .authenticationProvider(authenticationProvider)
