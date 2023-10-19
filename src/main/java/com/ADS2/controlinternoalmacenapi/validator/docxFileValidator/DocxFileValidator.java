@@ -13,7 +13,7 @@ public class DocxFileValidator implements ConstraintValidator<ValidDocxFile, Mul
 
     @Override
     public boolean isValid(MultipartFile multipartFile, ConstraintValidatorContext constraintValidatorContext) {
-        if (multipartFile == null) return false;
+        if (multipartFile == null) return true;
 
         String fileName = multipartFile.getOriginalFilename();
         return fileName != null && fileName.endsWith(".docx");
