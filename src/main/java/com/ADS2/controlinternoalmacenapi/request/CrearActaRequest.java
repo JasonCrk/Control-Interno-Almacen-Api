@@ -4,6 +4,7 @@ import com.ADS2.controlinternoalmacenapi.validator.docxFileValidator.ValidDocxFi
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class CrearActaRequest {
 
     @NotBlank(message = "El titulo es requerido")
+    @Size(message = "Máximo 255 caracteres", max = 255)
     private String title;
 
     @NotNull(message = "El documento es requerido")
