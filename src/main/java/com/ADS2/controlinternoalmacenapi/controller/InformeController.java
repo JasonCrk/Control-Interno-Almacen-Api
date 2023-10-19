@@ -29,4 +29,14 @@ public class InformeController {
                 HttpStatus.CREATED
         );
     }
+
+    @PostMapping(path = "/faltante")
+    public ResponseEntity<MessageResponse> crearInformeDeFaltante(
+            @Valid CrearInformeRequest request
+    ) {
+        return new ResponseEntity<>(
+                this.informeService.crearInformeDeFaltante(request),
+                HttpStatus.CREATED
+        );
+    }
 }

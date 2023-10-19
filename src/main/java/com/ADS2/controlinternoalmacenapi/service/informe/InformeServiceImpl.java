@@ -32,6 +32,16 @@ public class InformeServiceImpl implements InformeService {
         return new MessageResponse("El informe se ha guardado exitosamente");
     }
 
+    @Override
+    public MessageResponse crearInformeDeFaltante(CrearInformeRequest request) {
+        Informe informe = new Informe();
+        informe.setType(InformeType.FALTANTE);
+
+        this.saveInforme(informe, request);
+
+        return new MessageResponse("El informe se ha guardado exitosamente");
+    }
+
     private void saveInforme(Informe informe, CrearInformeRequest request) {
         informe.setTitle(request.getTitle());
 
