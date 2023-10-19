@@ -11,6 +11,7 @@ import com.ADS2.controlinternoalmacenapi.model.enums.Role;
 import com.ADS2.controlinternoalmacenapi.repository.MemorandumRepository;
 import com.ADS2.controlinternoalmacenapi.repository.UsuarioRepository;
 import com.ADS2.controlinternoalmacenapi.request.AsignarAnalistaRequest;
+import com.ADS2.controlinternoalmacenapi.request.CrearMemorandumRequest;
 import com.ADS2.controlinternoalmacenapi.request.EditarMemorandumRequest;
 import com.ADS2.controlinternoalmacenapi.response.MessageResponse;
 import com.ADS2.controlinternoalmacenapi.response.memorandum.MemorandumDetails;
@@ -37,6 +38,17 @@ public class MemorandumServiceImpl implements MemorandumService {
                 .findByIdAndType(memorandumId, MemorandumType.DESIGNACION)
                 .orElseThrow(() -> new NotFoundException("El memorandum no existe"));
         return MemorandumMapper.INSTANCE.toDetailResponse(memorandum);
+    }
+
+    @Override
+    public MessageResponse crearMemorandumDeSolicitudDeDesignacion(CrearMemorandumRequest request) {
+        Memorandum memorandum = new Memorandum();
+
+        memorandum.setType(MemorandumType.SOLICITUD_DESIGNACION);
+
+        this.saveMemorandum(memorandum, request);
+
+        return new MessageResponse("El memorandum se ha guardado exitosamente");
     }
 
     @Override
@@ -92,5 +104,18 @@ public class MemorandumServiceImpl implements MemorandumService {
         this.memorandumRepository.delete(memorandum);
 
         return new MessageResponse("El memorandum ha sido eliminado exitosamente");
+    }
+
+    private void saveMemorandum(Memorandum memorandum, CrearMemorandumRequest request) {
+        memorandum.setTitle(request.getTitle());
+
+        try {
+            String uploadedDocumentUrl = this.storageService.uploadFile(request.getDocument());
+            memorandum.setDocumentUrl(uploadedDocumentUrl);
+        } catch (IOException e) {
+            throw new FileUploadFailedException();
+        }
+
+        this.memorandumRepository.save(memorandum);
     }
 }

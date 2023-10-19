@@ -1,6 +1,7 @@
 package com.ADS2.controlinternoalmacenapi.controller;
 
 import com.ADS2.controlinternoalmacenapi.request.AsignarAnalistaRequest;
+import com.ADS2.controlinternoalmacenapi.request.CrearMemorandumRequest;
 import com.ADS2.controlinternoalmacenapi.request.EditarMemorandumRequest;
 import com.ADS2.controlinternoalmacenapi.response.MessageResponse;
 import com.ADS2.controlinternoalmacenapi.response.memorandum.MemorandumDetails;
@@ -9,6 +10,7 @@ import com.ADS2.controlinternoalmacenapi.service.memorandum.MemorandumService;
 import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,6 +26,16 @@ public class MemorandumController {
             @PathVariable("memorandumId") Long memorandumId
     ) {
         return ResponseEntity.ok(this.memorandumService.obtenerMemorandumDeDesignacion(memorandumId));
+    }
+
+    @PostMapping(path = "/solicitud-designacion")
+    public ResponseEntity<MessageResponse> crearMemorandumDeSolicitudDeDesignacion(
+            @Valid CrearMemorandumRequest request
+    ) {
+        return new ResponseEntity<>(
+                this.memorandumService.crearMemorandumDeSolicitudDeDesignacion(request),
+                HttpStatus.CREATED
+        );
     }
 
     @PostMapping(path = "/solicitud-designacion/{memorandumId}/asignar-analista")
