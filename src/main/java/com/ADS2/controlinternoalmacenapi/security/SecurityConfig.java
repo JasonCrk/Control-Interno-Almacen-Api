@@ -50,7 +50,7 @@ public class SecurityConfig {
                         .requestMatchers(
                                 HttpMethod.GET,
                                 "/api/actas/inventario",
-                                "/api/informes/{informeId}/sustento-diferencias",
+                                "/api/informes/sustento-diferencias/{informeId}",
                                 "/api/informes/sustento-diferencias"
                         ).hasAnyAuthority(Role.JEFE_UNIDAD_LOGISTICA.name(), Role.ADMIN.name())
                         .requestMatchers(
