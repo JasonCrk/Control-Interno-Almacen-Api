@@ -26,7 +26,7 @@ public class InformeController {
         return ResponseEntity.ok(this.informeService.listarInformesDeSustentoDeDiferencias());
     }
 
-    @GetMapping(path = "/{informeId}/sustento-diferencias")
+    @GetMapping(path = "/sustento-diferencias/{informeId}")
     public ResponseEntity<InformeDetails> obtenerInformeDeSustentoDeDiferencias(
             @PathVariable("informeId") Long informeId
     ) {
