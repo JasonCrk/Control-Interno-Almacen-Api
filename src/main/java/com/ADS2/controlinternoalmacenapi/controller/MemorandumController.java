@@ -47,4 +47,11 @@ public class MemorandumController {
                 request
         ));
     }
+
+    @DeleteMapping(path = "/solicitud-designacion/{memorandumId}")
+    public ResponseEntity<MessageResponse> eliminarMemorandumDeSolicitudDeDesignacion(
+            @PathVariable("memorandumId") Long memorandumId
+    ) {
+        return ResponseEntity.ok(this.memorandumService.elimarMemorandumDeSolicitudDeDesignacion(memorandumId));
+    }
 }
