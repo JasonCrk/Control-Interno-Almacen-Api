@@ -44,8 +44,8 @@ public class SecurityConfig {
                         ).permitAll()
                         .requestMatchers(
                                 "/api/usuarios/analistas",
-                                "/api/memorandums/{memorandumId}",
-                                "/api/memorandums/{memorandumId}/asignar-analista"
+                                "/api/memorandums/designacion/{memorandumId}",
+                                "/api/memorandums/solicitud-designacion/{memorandumId}/asignar-analista"
                         ).hasAnyAuthority(Role.JEFE_UNIDAD_FINANZAS.name(), Role.ADMIN.name())
                         .requestMatchers(
                                 HttpMethod.GET,
@@ -66,6 +66,10 @@ public class SecurityConfig {
                                 "/api/actas/entrega-productos-sin-fines-lucro",
                                 "/api/informes/sustento-diferencias"
                         ).hasAnyAuthority(Role.TECNICO_ADMINISTRATIVO_ALMACEN.name(), Role.ADMIN.name())
+                        .requestMatchers(
+                                HttpMethod.PUT,
+                                "/api/memorandums/solicitud-designacion/{memorandumId}"
+                        ).hasAnyAuthority(Role.TECNICO_ADMINISTRATIVO_LOGISTICA.name(), Role.ADMIN.name())
                         .anyRequest().hasAnyAuthority(Role.ADMIN.name())
                 )
                 .authenticationProvider(authenticationProvider)
