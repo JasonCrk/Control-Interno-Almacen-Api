@@ -15,7 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CrearActaRequest {
+public class CrearInformeRequest {
 
     @NotBlank(message = "El titulo es requerido")
     @Size(message = "Máximo 255 caracteres", max = 255)

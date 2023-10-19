@@ -55,7 +55,8 @@ public class SecurityConfig {
                                 "/api/actas/inventario"
                         ).hasAnyAuthority(Role.ANALISTA_FINANZAS.name(), Role.ADMIN.name())
                         .requestMatchers(
-                                "/api/actas/entrega-productos-sin-fines-lucro"
+                                "/api/actas/entrega-productos-sin-fines-lucro",
+                                "/api/informes/sustento-diferencias"
                         ).hasAnyAuthority(Role.TECNICO_ADMINISTRATIVO_ALMACEN.name(), Role.ADMIN.name())
                         .anyRequest().hasAnyAuthority(Role.ADMIN.name())
                 )
