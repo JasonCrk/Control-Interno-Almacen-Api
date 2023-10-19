@@ -1,6 +1,7 @@
 package com.ADS2.controlinternoalmacenapi.security;
 
 import com.ADS2.controlinternoalmacenapi.model.enums.Role;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -48,7 +49,8 @@ public class SecurityConfig {
                         ).hasAnyAuthority(Role.JEFE_UNIDAD_FINANZAS.name(), Role.ADMIN.name())
                         .requestMatchers(
                                 HttpMethod.GET,
-                                "/api/actas/inventario"
+                                "/api/actas/inventario",
+                                "/api/informes/{informeId}/sustento-diferencias"
                         ).hasAnyAuthority(Role.JEFE_UNIDAD_LOGISTICA.name(), Role.ADMIN.name())
                         .requestMatchers(
                                 HttpMethod.POST,
