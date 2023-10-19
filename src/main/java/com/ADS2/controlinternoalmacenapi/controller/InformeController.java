@@ -1,8 +1,10 @@
 package com.ADS2.controlinternoalmacenapi.controller;
 
 import com.ADS2.controlinternoalmacenapi.request.CrearInformeRequest;
+import com.ADS2.controlinternoalmacenapi.response.ListResponse;
 import com.ADS2.controlinternoalmacenapi.response.MessageResponse;
 import com.ADS2.controlinternoalmacenapi.response.informe.InformeDetails;
+import com.ADS2.controlinternoalmacenapi.response.informe.InformeResponse;
 import com.ADS2.controlinternoalmacenapi.service.informe.InformeService;
 
 import jakarta.validation.Valid;
@@ -18,6 +20,11 @@ public class InformeController {
 
     @Autowired
     private InformeService informeService;
+
+    @GetMapping(path = "/sustento-diferencias")
+    public ResponseEntity<ListResponse<InformeResponse>> listarInformesDeSustentoDeDiferencias() {
+        return ResponseEntity.ok(this.informeService.listarInformesDeSustentoDeDiferencias());
+    }
 
     @GetMapping(path = "/{informeId}/sustento-diferencias")
     public ResponseEntity<InformeDetails> obtenerInformeDeSustentoDeDiferencias(

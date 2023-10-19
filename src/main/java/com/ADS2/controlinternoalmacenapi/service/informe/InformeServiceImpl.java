@@ -7,15 +7,18 @@ import com.ADS2.controlinternoalmacenapi.model.Informe;
 import com.ADS2.controlinternoalmacenapi.model.enums.InformeType;
 import com.ADS2.controlinternoalmacenapi.repository.InformeRepository;
 import com.ADS2.controlinternoalmacenapi.request.CrearInformeRequest;
+import com.ADS2.controlinternoalmacenapi.response.ListResponse;
 import com.ADS2.controlinternoalmacenapi.response.MessageResponse;
 import com.ADS2.controlinternoalmacenapi.response.informe.InformeDetails;
 import com.ADS2.controlinternoalmacenapi.response.informe.InformeMapper;
+import com.ADS2.controlinternoalmacenapi.response.informe.InformeResponse;
 
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -24,6 +27,12 @@ public class InformeServiceImpl implements InformeService {
     private final InformeRepository informeRepository;
 
     private final FirebaseStorageService storageService;
+
+    @Override
+    public ListResponse<InformeResponse> listarInformesDeSustentoDeDiferencias() {
+        List<Informe> informes = this.informeRepository.findByTypeOrderByCreatedAtDesc(InformeType.SUSTENTO_DIFERENCIAS);
+        return new ListResponse<>(InformeMapper.INSTANCE.toListResponse(informes));
+    }
 
     @Override
     public InformeDetails obtenerInformeDeSustentoDeDiferencias(Long informeId) {
