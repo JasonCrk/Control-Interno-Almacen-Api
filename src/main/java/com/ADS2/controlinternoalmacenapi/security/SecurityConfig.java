@@ -70,6 +70,10 @@ public class SecurityConfig {
                                 HttpMethod.PUT,
                                 "/api/memorandums/solicitud-designacion/{memorandumId}"
                         ).hasAnyAuthority(Role.TECNICO_ADMINISTRATIVO_LOGISTICA.name(), Role.ADMIN.name())
+                        .requestMatchers(
+                                HttpMethod.DELETE,
+                                "/api/memorandums/solicitud-designacion/{memorandumId}"
+                        ).hasAnyAuthority(Role.TECNICO_ADMINISTRATIVO_LOGISTICA.name(), Role.ADMIN.name())
                         .anyRequest().hasAnyAuthority(Role.ADMIN.name())
                 )
                 .authenticationProvider(authenticationProvider)
