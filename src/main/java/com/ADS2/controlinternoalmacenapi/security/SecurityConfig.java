@@ -45,7 +45,8 @@ public class SecurityConfig {
                         .requestMatchers(
                                 HttpMethod.GET,
                                 "/api/usuarios/analistas",
-                                "/api/memorandums/designacion/{memorandumId}"
+                                "/api/memorandums/designacion/{memorandumId}",
+                                "/api/memorandums/designacion"
                         ).hasAnyAuthority(Role.JEFE_UNIDAD_FINANZAS.name(), Role.ADMIN.name())
                         .requestMatchers(
                                 HttpMethod.POST,
