@@ -36,6 +36,12 @@ public class MemorandumServiceImpl implements MemorandumService {
     private final FirebaseStorageService storageService;
 
     @Override
+    public ListResponse<MemorandumResponse> listarMemorandumsDeDesignacion() {
+        List<Memorandum> memorandums = this.memorandumRepository.findByTypeOrderByCreatedAtDesc(MemorandumType.DESIGNACION);
+        return new ListResponse<>(MemorandumMapper.INSTANCE.toListResponse(memorandums));
+    }
+
+    @Override
     public ListResponse<MemorandumResponse> listarMemorandumsDeSolicitudDeDesignacion() {
         List<Memorandum> memorandums = this.memorandumRepository.findByTypeOrderByCreatedAtDesc(MemorandumType.SOLICITUD_DESIGNACION);
         return new ListResponse<>(MemorandumMapper.INSTANCE.toListResponse(memorandums));

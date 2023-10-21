@@ -67,6 +67,10 @@ public class SecurityConfig {
                                 "/api/actas/inventario"
                         ).hasAnyAuthority(Role.ANALISTA_FINANZAS.name(), Role.ADMIN.name())
                         .requestMatchers(
+                                HttpMethod.GET,
+                                "/api/memorandums/designacion"
+                        ).hasAnyAuthority(Role.ASISTENTE.name(), Role.ADMIN.name())
+                        .requestMatchers(
                                 HttpMethod.POST,
                                 "/api/memorandums/designacion"
                         ).hasAnyAuthority(Role.ASISTENTE.name(), Role.ADMIN.name())
