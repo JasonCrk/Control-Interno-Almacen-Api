@@ -48,6 +48,13 @@ public class MemorandumServiceImpl implements MemorandumService {
     }
 
     @Override
+    public ListResponse<MemorandumResponse> buscarMemorandumsDeSolicitudDeAsignacion(String searchQuery) {
+        List<Memorandum> filteredMemorandums = this.memorandumRepository
+                .searchByTitleStartingWithAndTypeOrderByCreatedAtDesc(searchQuery, MemorandumType.SOLICITUD_ASIGNACION);
+        return new ListResponse<>(MemorandumMapper.INSTANCE.toListResponse(filteredMemorandums));
+    }
+
+    @Override
     public MemorandumDetails obtenerMemorandumDeDesignacion(Long memorandumId) {
         Memorandum memorandum = this.memorandumRepository
                 .findByIdAndType(memorandumId, MemorandumType.DESIGNACION)

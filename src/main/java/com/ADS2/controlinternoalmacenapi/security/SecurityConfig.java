@@ -56,7 +56,8 @@ public class SecurityConfig {
                                 "/api/actas/inventario",
                                 "/api/informes/sustento-diferencias/{informeId}",
                                 "/api/informes/sustento-diferencias",
-                                "/api/memorandums/solicitud-asignacion/{memorandumId}"
+                                "/api/memorandums/solicitud-asignacion/{memorandumId}",
+                                "/api/memorandums/solicitud-asignacion"
                         ).hasAnyAuthority(Role.JEFE_UNIDAD_LOGISTICA.name(), Role.ADMIN.name())
                         .requestMatchers(
                                 HttpMethod.POST,
