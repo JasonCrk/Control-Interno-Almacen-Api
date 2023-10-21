@@ -28,7 +28,7 @@ public class ActaServiceImpl implements ActaService {
 
     @Override
     public ListResponse<ActaResponse> listarActasDeInventario() {
-        List<Acta> actas = this.actaRepository.findByOrderByCreatedAtDesc();
+        List<Acta> actas = this.actaRepository.findByTypeOrderByCreatedAtDesc(ActaType.INVENTARIO);
         return new ListResponse<>(ActaMapper.INSTANCE.toList(actas));
     }
 
