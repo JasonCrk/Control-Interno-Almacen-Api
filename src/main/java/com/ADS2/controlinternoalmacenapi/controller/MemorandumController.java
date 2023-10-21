@@ -23,16 +23,21 @@ public class MemorandumController {
     @Autowired
     private MemorandumService memorandumService;
 
-    @GetMapping(path = "/designacion/{memorandumId}")
-    public ResponseEntity<MemorandumDetails> obtenerMemorandumDeDesignacion(
-            @PathVariable("memorandumId") Long memorandumId
-    ) {
-        return ResponseEntity.ok(this.memorandumService.obtenerMemorandumDeDesignacion(memorandumId));
+    @GetMapping(path = "/designacion")
+    public ResponseEntity<ListResponse<MemorandumResponse>> listarMemorandumsDeDesignacion() {
+        return ResponseEntity.ok(this.memorandumService.listarMemorandumsDeDesignacion());
     }
 
     @GetMapping(path = "/solicitud-designacion")
     public ResponseEntity<ListResponse<MemorandumResponse>> listarMemorandumsDeSolicitudDeDesignacion() {
         return ResponseEntity.ok(this.memorandumService.listarMemorandumsDeSolicitudDeDesignacion());
+    }
+
+    @GetMapping(path = "/designacion/{memorandumId}")
+    public ResponseEntity<MemorandumDetails> obtenerMemorandumDeDesignacion(
+            @PathVariable("memorandumId") Long memorandumId
+    ) {
+        return ResponseEntity.ok(this.memorandumService.obtenerMemorandumDeDesignacion(memorandumId));
     }
 
     @GetMapping(path = "/solicitud-asignacion/{memorandumId}")

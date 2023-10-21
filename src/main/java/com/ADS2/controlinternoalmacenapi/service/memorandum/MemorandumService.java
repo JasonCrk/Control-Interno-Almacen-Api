@@ -9,6 +9,7 @@ import com.ADS2.controlinternoalmacenapi.response.memorandum.MemorandumDetails;
 import com.ADS2.controlinternoalmacenapi.response.memorandum.MemorandumResponse;
 
 public interface MemorandumService {
+    ListResponse<MemorandumResponse> listarMemorandumsDeDesignacion();
     ListResponse<MemorandumResponse> listarMemorandumsDeSolicitudDeDesignacion();
     MemorandumDetails obtenerMemorandumDeDesignacion(Long memorandumId);
     MemorandumDetails obtenerMemorandumDeSolicitudDeAsignacion(Long memorandumId);
