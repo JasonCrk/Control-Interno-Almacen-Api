@@ -67,6 +67,10 @@ public class SecurityConfig {
                                 "/api/informes/sustento-diferencias"
                         ).hasAnyAuthority(Role.TECNICO_ADMINISTRATIVO_ALMACEN.name(), Role.ADMIN.name())
                         .requestMatchers(
+                                HttpMethod.GET,
+                                "/api/memorandums/solicitud-designacion"
+                        ).hasAnyAuthority(Role.TECNICO_ADMINISTRATIVO_LOGISTICA.name(), Role.ADMIN.name())
+                        .requestMatchers(
                                 HttpMethod.POST,
                                 "/api/memorandums/solicitud-designacion"
                         ).hasAnyAuthority(Role.TECNICO_ADMINISTRATIVO_LOGISTICA.name(), Role.ADMIN.name())

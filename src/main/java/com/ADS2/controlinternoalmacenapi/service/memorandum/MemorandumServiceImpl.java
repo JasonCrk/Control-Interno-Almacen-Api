@@ -13,15 +13,18 @@ import com.ADS2.controlinternoalmacenapi.repository.UsuarioRepository;
 import com.ADS2.controlinternoalmacenapi.request.AsignarAnalistaRequest;
 import com.ADS2.controlinternoalmacenapi.request.CrearMemorandumRequest;
 import com.ADS2.controlinternoalmacenapi.request.EditarMemorandumRequest;
+import com.ADS2.controlinternoalmacenapi.response.ListResponse;
 import com.ADS2.controlinternoalmacenapi.response.MessageResponse;
 import com.ADS2.controlinternoalmacenapi.response.memorandum.MemorandumDetails;
 import com.ADS2.controlinternoalmacenapi.response.memorandum.MemorandumMapper;
+import com.ADS2.controlinternoalmacenapi.response.memorandum.MemorandumResponse;
 
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -31,6 +34,12 @@ public class MemorandumServiceImpl implements MemorandumService {
     private final UsuarioRepository userRepository;
 
     private final FirebaseStorageService storageService;
+
+    @Override
+    public ListResponse<MemorandumResponse> listarMemorandumsDeSolicitudDeDesignacion() {
+        List<Memorandum> memorandums = this.memorandumRepository.findByTypeOrderByCreatedAtDesc(MemorandumType.SOLICITUD_DESIGNACION);
+        return new ListResponse<>(MemorandumMapper.INSTANCE.toListResponse(memorandums));
+    }
 
     @Override
     public MemorandumDetails obtenerMemorandumDeDesignacion(Long memorandumId) {

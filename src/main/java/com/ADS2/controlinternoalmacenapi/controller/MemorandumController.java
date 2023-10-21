@@ -3,8 +3,10 @@ package com.ADS2.controlinternoalmacenapi.controller;
 import com.ADS2.controlinternoalmacenapi.request.AsignarAnalistaRequest;
 import com.ADS2.controlinternoalmacenapi.request.CrearMemorandumRequest;
 import com.ADS2.controlinternoalmacenapi.request.EditarMemorandumRequest;
+import com.ADS2.controlinternoalmacenapi.response.ListResponse;
 import com.ADS2.controlinternoalmacenapi.response.MessageResponse;
 import com.ADS2.controlinternoalmacenapi.response.memorandum.MemorandumDetails;
+import com.ADS2.controlinternoalmacenapi.response.memorandum.MemorandumResponse;
 import com.ADS2.controlinternoalmacenapi.service.memorandum.MemorandumService;
 
 import jakarta.validation.Valid;
@@ -20,6 +22,11 @@ public class MemorandumController {
 
     @Autowired
     private MemorandumService memorandumService;
+
+    @GetMapping(path = "/solicitud-designacion")
+    public ResponseEntity<ListResponse<MemorandumResponse>> listarMemorandumsDeSolicitudDeDesignacion() {
+        return ResponseEntity.ok(this.memorandumService.listarMemorandumsDeSolicitudDeDesignacion());
+    }
 
     @GetMapping(path = "/designacion/{memorandumId}")
     public ResponseEntity<MemorandumDetails> obtenerMemorandumDeDesignacion(

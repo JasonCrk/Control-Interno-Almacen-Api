@@ -6,6 +6,8 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
+import java.util.List;
+
 @Mapper(componentModel = "spring")
 public interface MemorandumMapper {
 
@@ -14,4 +16,10 @@ public interface MemorandumMapper {
     @Mapping(expression = "java(memorandum.getStatus().getName())", target = "status")
     @Mapping(expression = "java(memorandum.getCreatedAt().toString())", target = "createdAt")
     MemorandumDetails toDetailResponse(Memorandum memorandum);
+
+    @Mapping(expression = "java(memorandum.getCreatedAt().toString())", target = "createdAt")
+    MemorandumResponse toResponse(Memorandum memorandum);
+
+    @Mapping(expression = "java(memorandum.getCreatedAt().toString())", target = "createdAt")
+    List<MemorandumResponse> toListResponse(List<Memorandum> memorandums);
 }
