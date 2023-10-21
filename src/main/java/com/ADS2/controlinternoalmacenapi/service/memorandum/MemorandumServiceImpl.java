@@ -107,18 +107,18 @@ public class MemorandumServiceImpl implements MemorandumService {
                 .findByIdAndType(memorandumId, MemorandumType.SOLICITUD_DESIGNACION)
                 .orElseThrow(() -> new NotFoundException("El memorandum no existe"));
 
-        memorandum.setTitle(request.getTitle());
+        this.updateMemorandum(memorandum, request);
 
-        if (request.getDocument() != null) {
-            try {
-                String uploadedDocumentUrl = this.storageService.uploadFile(request.getDocument());
-                memorandum.setDocumentUrl(uploadedDocumentUrl);
-            } catch (IOException e) {
-                throw new FileUploadFailedException();
-            }
-        }
+        return new MessageResponse("Se ha editado el memorandum exitosamente");
+    }
 
-        this.memorandumRepository.save(memorandum);
+    @Override
+    public MessageResponse editarMemorandumDeDesignacion(Long memorandumId, EditarMemorandumRequest request) {
+        Memorandum memorandum = this.memorandumRepository
+                .findByIdAndType(memorandumId, MemorandumType.DESIGNACION)
+                .orElseThrow(() -> new NotFoundException("El memorandum no existe"));
+
+        this.updateMemorandum(memorandum, request);
 
         return new MessageResponse("Se ha editado el memorandum exitosamente");
     }
@@ -142,6 +142,21 @@ public class MemorandumServiceImpl implements MemorandumService {
             memorandum.setDocumentUrl(uploadedDocumentUrl);
         } catch (IOException e) {
             throw new FileUploadFailedException();
+        }
+
+        this.memorandumRepository.save(memorandum);
+    }
+
+    private void updateMemorandum(Memorandum memorandum, EditarMemorandumRequest request) {
+        memorandum.setTitle(request.getTitle());
+
+        if (request.getDocument() != null) {
+            try {
+                String uploadedDocumentUrl = this.storageService.uploadFile(request.getDocument());
+                memorandum.setDocumentUrl(uploadedDocumentUrl);
+            } catch (IOException e) {
+                throw new FileUploadFailedException();
+            }
         }
 
         this.memorandumRepository.save(memorandum);
