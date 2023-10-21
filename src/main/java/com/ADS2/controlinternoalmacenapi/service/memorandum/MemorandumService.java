@@ -12,6 +12,7 @@ public interface MemorandumService {
     ListResponse<MemorandumResponse> listarMemorandumsDeSolicitudDeDesignacion();
     MemorandumDetails obtenerMemorandumDeDesignacion(Long memorandumId);
     MessageResponse crearMemorandumDeSolicitudDeDesignacion(CrearMemorandumRequest request);
+    MessageResponse crearMemorandumDeDesignacion(CrearMemorandumRequest request);
     MessageResponse asignarAnalistaAMemorandumDeSolicitudDeDesignacion(
             Long memorandumId,
             AsignarAnalistaRequest request
