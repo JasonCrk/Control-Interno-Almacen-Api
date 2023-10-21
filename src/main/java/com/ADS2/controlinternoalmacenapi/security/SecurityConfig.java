@@ -51,7 +51,8 @@ public class SecurityConfig {
                                 HttpMethod.GET,
                                 "/api/actas/inventario",
                                 "/api/informes/sustento-diferencias/{informeId}",
-                                "/api/informes/sustento-diferencias"
+                                "/api/informes/sustento-diferencias",
+                                "/api/memorandums/solicitud-asignacion/{memorandumId}"
                         ).hasAnyAuthority(Role.JEFE_UNIDAD_LOGISTICA.name(), Role.ADMIN.name())
                         .requestMatchers(
                                 HttpMethod.POST,
