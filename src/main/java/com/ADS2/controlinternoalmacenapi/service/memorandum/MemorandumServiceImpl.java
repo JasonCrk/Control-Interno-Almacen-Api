@@ -134,6 +134,17 @@ public class MemorandumServiceImpl implements MemorandumService {
         return new MessageResponse("El memorandum ha sido eliminado exitosamente");
     }
 
+    @Override
+    public MessageResponse elimarMemorandumDeDesignacion(Long memorandumId) {
+        Memorandum memorandum = this.memorandumRepository
+                .findByIdAndType(memorandumId, MemorandumType.DESIGNACION)
+                .orElseThrow(() -> new NotFoundException("El memorandum no existe"));
+
+        this.memorandumRepository.delete(memorandum);
+
+        return new MessageResponse("El memorandum ha sido eliminado exitosamente");
+    }
+
     private void saveMemorandum(Memorandum memorandum, CrearMemorandumRequest request) {
         memorandum.setTitle(request.getTitle());
 

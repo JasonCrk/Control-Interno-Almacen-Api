@@ -75,6 +75,10 @@ public class SecurityConfig {
                                 "/api/memorandums/designacion/{memorandumId}"
                         ).hasAnyAuthority(Role.ASISTENTE.name(), Role.ADMIN.name())
                         .requestMatchers(
+                                HttpMethod.DELETE,
+                                "/api/memorandums/designacion/{memorandumId}"
+                        ).hasAnyAuthority(Role.ASISTENTE.name(), Role.ADMIN.name())
+                        .requestMatchers(
                                 HttpMethod.POST,
                                 "/api/actas/entrega-productos-sin-fines-lucro",
                                 "/api/informes/sustento-diferencias"
