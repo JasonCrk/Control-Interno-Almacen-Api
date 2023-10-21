@@ -29,8 +29,10 @@ public class MemorandumController {
     }
 
     @GetMapping(path = "/solicitud-designacion")
-    public ResponseEntity<ListResponse<MemorandumResponse>> listarMemorandumsDeSolicitudDeDesignacion() {
-        return ResponseEntity.ok(this.memorandumService.listarMemorandumsDeSolicitudDeDesignacion());
+    public ResponseEntity<ListResponse<MemorandumResponse>> buscarMemorandumsDeSolicitudDeDesignacion(
+            @RequestParam(name = "q", required = false, defaultValue = "") String searchQuery
+    ) {
+        return ResponseEntity.ok(this.memorandumService.buscarMemorandumsDeSolicitudDeDesignacion(searchQuery));
     }
 
     @GetMapping(path = "/solicitud-asignacion")

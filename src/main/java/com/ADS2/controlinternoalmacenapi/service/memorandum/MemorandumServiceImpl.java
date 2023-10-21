@@ -42,8 +42,9 @@ public class MemorandumServiceImpl implements MemorandumService {
     }
 
     @Override
-    public ListResponse<MemorandumResponse> listarMemorandumsDeSolicitudDeDesignacion() {
-        List<Memorandum> memorandums = this.memorandumRepository.findByTypeOrderByCreatedAtDesc(MemorandumType.SOLICITUD_DESIGNACION);
+    public ListResponse<MemorandumResponse> buscarMemorandumsDeSolicitudDeDesignacion(String searchQuery) {
+        List<Memorandum> memorandums = this.memorandumRepository
+                .searchByTitleStartingWithAndTypeOrderByCreatedAtDesc(searchQuery, MemorandumType.SOLICITUD_DESIGNACION);
         return new ListResponse<>(MemorandumMapper.INSTANCE.toListResponse(memorandums));
     }
 
@@ -73,7 +74,6 @@ public class MemorandumServiceImpl implements MemorandumService {
     @Override
     public MessageResponse crearMemorandumDeSolicitudDeDesignacion(CrearMemorandumRequest request) {
         Memorandum memorandum = new Memorandum();
-
         memorandum.setType(MemorandumType.SOLICITUD_DESIGNACION);
 
         this.saveMemorandum(memorandum, request);
@@ -84,7 +84,6 @@ public class MemorandumServiceImpl implements MemorandumService {
     @Override
     public MessageResponse crearMemorandumDeDesignacion(CrearMemorandumRequest request) {
         Memorandum memorandum = new Memorandum();
-
         memorandum.setType(MemorandumType.DESIGNACION);
 
         this.saveMemorandum(memorandum, request);
