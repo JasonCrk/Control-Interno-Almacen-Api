@@ -1,6 +1,7 @@
 package com.ADS2.controlinternoalmacenapi.service.acta;
 
 import com.ADS2.controlinternoalmacenapi.exception.FileUploadFailedException;
+import com.ADS2.controlinternoalmacenapi.exception.NotFoundException;
 import com.ADS2.controlinternoalmacenapi.firebase.FirebaseStorageService;
 import com.ADS2.controlinternoalmacenapi.model.Acta;
 import com.ADS2.controlinternoalmacenapi.model.enums.ActaType;
@@ -8,6 +9,7 @@ import com.ADS2.controlinternoalmacenapi.repository.ActaRepository;
 import com.ADS2.controlinternoalmacenapi.request.CrearActaRequest;
 import com.ADS2.controlinternoalmacenapi.response.ListResponse;
 import com.ADS2.controlinternoalmacenapi.response.MessageResponse;
+import com.ADS2.controlinternoalmacenapi.response.acta.ActaDetails;
 import com.ADS2.controlinternoalmacenapi.response.acta.ActaMapper;
 import com.ADS2.controlinternoalmacenapi.response.acta.ActaResponse;
 
@@ -30,6 +32,14 @@ public class ActaServiceImpl implements ActaService {
     public ListResponse<ActaResponse> listarActasDeInventario() {
         List<Acta> actas = this.actaRepository.findByTypeOrderByCreatedAtDesc(ActaType.INVENTARIO);
         return new ListResponse<>(ActaMapper.INSTANCE.toList(actas));
+    }
+
+    @Override
+    public ActaDetails obtenerActaDeInventario(Long actaId) {
+        Acta acta = this.actaRepository
+                .findByIdAndType(actaId, ActaType.INVENTARIO)
+                .orElseThrow(() -> new NotFoundException("El acta no existe"));
+        return ActaMapper.INSTANCE.toDetailResponse(acta);
     }
 
     @Override

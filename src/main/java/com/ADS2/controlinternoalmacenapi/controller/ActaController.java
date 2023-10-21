@@ -3,6 +3,7 @@ package com.ADS2.controlinternoalmacenapi.controller;
 import com.ADS2.controlinternoalmacenapi.request.CrearActaRequest;
 import com.ADS2.controlinternoalmacenapi.response.ListResponse;
 import com.ADS2.controlinternoalmacenapi.response.MessageResponse;
+import com.ADS2.controlinternoalmacenapi.response.acta.ActaDetails;
 import com.ADS2.controlinternoalmacenapi.response.acta.ActaResponse;
 import com.ADS2.controlinternoalmacenapi.service.acta.ActaService;
 
@@ -25,6 +26,13 @@ public class ActaController {
     @GetMapping(path = "/inventario")
     public ResponseEntity<ListResponse<ActaResponse>> listarActasDeInventario() {
         return ResponseEntity.ok(this.actaService.listarActasDeInventario());
+    }
+
+    @GetMapping(path = "/inventario/{actaId}")
+    public ResponseEntity<ActaDetails> obtenerActaDeInventario(
+            @PathVariable("actaId") Long actaId
+    ) {
+        return ResponseEntity.ok(this.actaService.obtenerActaDeInventario(actaId));
     }
 
     @PostMapping(path = "/inventario")

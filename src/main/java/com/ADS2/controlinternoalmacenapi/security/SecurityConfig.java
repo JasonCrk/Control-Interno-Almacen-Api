@@ -55,6 +55,7 @@ public class SecurityConfig {
                         .requestMatchers(
                                 HttpMethod.GET,
                                 "/api/actas/inventario",
+                                "/api/actas/inventario/{actaId}",
                                 "/api/informes/sustento-diferencias/{informeId}",
                                 "/api/informes/sustento-diferencias",
                                 "/api/memorandums/solicitud-asignacion/{memorandumId}",
