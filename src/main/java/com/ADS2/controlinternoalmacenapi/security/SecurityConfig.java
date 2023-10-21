@@ -91,7 +91,11 @@ public class SecurityConfig {
                         .requestMatchers(
                                 HttpMethod.GET,
                                 "/api/memorandums/solicitud-designacion"
-                        ).hasAnyAuthority(Role.TECNICO_ADMINISTRATIVO_LOGISTICA.name(), Role.ADMIN.name())
+                        ).hasAnyAuthority(
+                                Role.JEFE_UNIDAD_FINANZAS.name(),
+                                Role.TECNICO_ADMINISTRATIVO_LOGISTICA.name(),
+                                Role.ADMIN.name()
+                        )
                         .requestMatchers(
                                 HttpMethod.POST,
                                 "/api/memorandums/solicitud-designacion"
