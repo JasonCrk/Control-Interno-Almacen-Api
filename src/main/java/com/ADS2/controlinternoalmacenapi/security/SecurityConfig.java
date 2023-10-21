@@ -43,8 +43,12 @@ public class SecurityConfig {
                                 "/api/auth/**"
                         ).permitAll()
                         .requestMatchers(
+                                HttpMethod.GET,
                                 "/api/usuarios/analistas",
-                                "/api/memorandums/designacion/{memorandumId}",
+                                "/api/memorandums/designacion/{memorandumId}"
+                        ).hasAnyAuthority(Role.JEFE_UNIDAD_FINANZAS.name(), Role.ADMIN.name())
+                        .requestMatchers(
+                                HttpMethod.POST,
                                 "/api/memorandums/solicitud-designacion/{memorandumId}/asignar-analista"
                         ).hasAnyAuthority(Role.JEFE_UNIDAD_FINANZAS.name(), Role.ADMIN.name())
                         .requestMatchers(
@@ -65,6 +69,10 @@ public class SecurityConfig {
                         .requestMatchers(
                                 HttpMethod.POST,
                                 "/api/memorandums/designacion"
+                        ).hasAnyAuthority(Role.ASISTENTE.name(), Role.ADMIN.name())
+                        .requestMatchers(
+                                HttpMethod.PUT,
+                                "/api/memorandums/designacion/{memorandumId}"
                         ).hasAnyAuthority(Role.ASISTENTE.name(), Role.ADMIN.name())
                         .requestMatchers(
                                 HttpMethod.POST,
