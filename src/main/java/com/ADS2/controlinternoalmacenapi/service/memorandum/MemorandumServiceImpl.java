@@ -61,6 +61,17 @@ public class MemorandumServiceImpl implements MemorandumService {
     }
 
     @Override
+    public MessageResponse crearMemorandumDeDesignacion(CrearMemorandumRequest request) {
+        Memorandum memorandum = new Memorandum();
+
+        memorandum.setType(MemorandumType.DESIGNACION);
+
+        this.saveMemorandum(memorandum, request);
+
+        return new MessageResponse("El memorandum se ha guardado exitosamente");
+    }
+
+    @Override
     public MessageResponse asignarAnalistaAMemorandumDeSolicitudDeDesignacion(
             Long memorandumId,
             AsignarAnalistaRequest request
