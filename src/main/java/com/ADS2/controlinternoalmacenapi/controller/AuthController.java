@@ -1,8 +1,10 @@
 package com.ADS2.controlinternoalmacenapi.controller;
 
+import com.ADS2.controlinternoalmacenapi.model.Usuario;
 import com.ADS2.controlinternoalmacenapi.request.LoginRequest;
 import com.ADS2.controlinternoalmacenapi.response.MessageResponse;
 import com.ADS2.controlinternoalmacenapi.response.auth.JwtResponse;
+import com.ADS2.controlinternoalmacenapi.response.usuario.UsuarioAuth;
 import com.ADS2.controlinternoalmacenapi.service.auth.AuthService;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -21,6 +23,13 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
 
     private final AuthService authService;
+
+    @GetMapping(path = "/user")
+    public ResponseEntity<UsuarioAuth> retrieveUserByToken(
+            @RequestAttribute("user") Usuario user
+    ) {
+        return ResponseEntity.ok(this.authService.retrieveUserByToken(user));
+    }
 
     @GetMapping(path = "/verify-token")
     public ResponseEntity<MessageResponse> verifyToken() {

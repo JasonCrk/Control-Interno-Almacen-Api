@@ -18,4 +18,8 @@ public interface UsuarioMapper {
 
     @Mapping(source = "avatarUrl", target = "avatar")
     List<UsuarioResponse> toList(List<Usuario> users);
+
+    @Mapping(source = "avatarUrl", target = "avatar")
+    @Mapping(expression = "java(user.getRole().name())", target = "role")
+    UsuarioAuth toAuthResponse(Usuario user);
 }
