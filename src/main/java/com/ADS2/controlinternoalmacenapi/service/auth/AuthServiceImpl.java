@@ -9,6 +9,8 @@ import com.ADS2.controlinternoalmacenapi.model.Usuario;
 import com.ADS2.controlinternoalmacenapi.repository.TokenRepository;
 import com.ADS2.controlinternoalmacenapi.repository.UsuarioRepository;
 import com.ADS2.controlinternoalmacenapi.response.auth.JwtResponse;
+import com.ADS2.controlinternoalmacenapi.response.usuario.UsuarioAuth;
+import com.ADS2.controlinternoalmacenapi.response.usuario.UsuarioMapper;
 import com.ADS2.controlinternoalmacenapi.security.JwtService;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -30,6 +32,11 @@ public class AuthServiceImpl implements AuthService {
 
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
+
+    @Override
+    public UsuarioAuth retrieveUserByToken(Usuario user) {
+        return UsuarioMapper.INSTANCE.toAuthResponse(user);
+    }
 
     @Override
     public JwtResponse login(LoginRequest loginData) {

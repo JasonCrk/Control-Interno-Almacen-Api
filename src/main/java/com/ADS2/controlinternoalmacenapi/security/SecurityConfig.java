@@ -44,7 +44,8 @@ public class SecurityConfig {
                                 "/api/auth/refresh-token"
                         ).permitAll()
                         .requestMatchers(
-                                "/api/auth/verify-token"
+                                "/api/auth/verify-token",
+                                "/api/auth/user"
                         ).authenticated()
                         .requestMatchers(
                                 HttpMethod.GET,
