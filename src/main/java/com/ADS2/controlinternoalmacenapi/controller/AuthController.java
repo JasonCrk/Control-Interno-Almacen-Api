@@ -1,6 +1,7 @@
 package com.ADS2.controlinternoalmacenapi.controller;
 
 import com.ADS2.controlinternoalmacenapi.request.LoginRequest;
+import com.ADS2.controlinternoalmacenapi.response.MessageResponse;
 import com.ADS2.controlinternoalmacenapi.response.auth.JwtResponse;
 import com.ADS2.controlinternoalmacenapi.service.auth.AuthService;
 
@@ -12,10 +13,7 @@ import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(path = "/api/auth")
@@ -23,6 +21,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
 
     private final AuthService authService;
+
+    @GetMapping(path = "/verify-token")
+    public ResponseEntity<MessageResponse> verifyToken() {
+        return ResponseEntity.ok(new MessageResponse("El token de acceso es valido"));
+    }
 
     @PostMapping(path = "/login")
     public ResponseEntity<JwtResponse> login(
