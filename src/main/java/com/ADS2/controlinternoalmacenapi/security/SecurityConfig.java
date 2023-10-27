@@ -40,8 +40,12 @@ public class SecurityConfig {
                 )
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(
-                                "/api/auth/**"
+                                "/api/auth/login",
+                                "/api/auth/refresh-token"
                         ).permitAll()
+                        .requestMatchers(
+                                "/api/auth/verify-token"
+                        ).authenticated()
                         .requestMatchers(
                                 HttpMethod.GET,
                                 "/api/usuarios/analistas",
