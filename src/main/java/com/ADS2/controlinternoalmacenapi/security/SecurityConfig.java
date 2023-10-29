@@ -8,9 +8,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -30,95 +32,63 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
-        return httpSecurity
-                .csrf(csrf -> csrf.disable())
-                .sessionManagement(management -> management
-                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                )
-                .exceptionHandling(exception -> exception
-                        .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
-                )
-                .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers(
-                                "/api/auth/login",
-                                "/api/auth/refresh-token"
-                        ).permitAll()
-                        .requestMatchers(
-                                "/api/auth/verify-token",
-                                "/api/auth/user"
-                        ).authenticated()
-                        .requestMatchers(
-                                HttpMethod.GET,
-                                "/api/usuarios/analistas",
-                                "/api/memorandums/designacion/{memorandumId}",
-                                "/api/memorandums/designacion"
-                        ).hasAnyAuthority(Role.JEFE_UNIDAD_FINANZAS.name(), Role.ADMIN.name())
-                        .requestMatchers(
-                                HttpMethod.POST,
-                                "/api/memorandums/solicitud-designacion/{memorandumId}/asignar-analista"
-                        ).hasAnyAuthority(Role.JEFE_UNIDAD_FINANZAS.name(), Role.ADMIN.name())
-                        .requestMatchers(
-                                HttpMethod.GET,
-                                "/api/actas/inventario",
-                                "/api/actas/inventario/{actaId}",
-                                "/api/informes/sustento-diferencias/{informeId}",
-                                "/api/informes/sustento-diferencias",
-                                "/api/memorandums/solicitud-asignacion/{memorandumId}",
-                                "/api/memorandums/solicitud-asignacion"
-                        ).hasAnyAuthority(Role.JEFE_UNIDAD_LOGISTICA.name(), Role.ADMIN.name())
-                        .requestMatchers(
-                                HttpMethod.POST,
-                                "/api/informes/faltante"
-                        ).hasAnyAuthority(Role.JEFE_UNIDAD_LOGISTICA.name(), Role.ADMIN.name())
-                        .requestMatchers(
-                                HttpMethod.POST,
-                                "/api/actas/inventario"
-                        ).hasAnyAuthority(Role.ANALISTA_FINANZAS.name(), Role.ADMIN.name())
-                        .requestMatchers(
-                                HttpMethod.GET,
-                                "/api/memorandums/designacion"
-                        ).hasAnyAuthority(Role.ASISTENTE.name(), Role.ADMIN.name())
-                        .requestMatchers(
-                                HttpMethod.POST,
-                                "/api/memorandums/designacion"
-                        ).hasAnyAuthority(Role.ASISTENTE.name(), Role.ADMIN.name())
-                        .requestMatchers(
-                                HttpMethod.PUT,
-                                "/api/memorandums/designacion/{memorandumId}"
-                        ).hasAnyAuthority(Role.ASISTENTE.name(), Role.ADMIN.name())
-                        .requestMatchers(
-                                HttpMethod.DELETE,
-                                "/api/memorandums/designacion/{memorandumId}"
-                        ).hasAnyAuthority(Role.ASISTENTE.name(), Role.ADMIN.name())
-                        .requestMatchers(
-                                HttpMethod.POST,
-                                "/api/actas/entrega-productos-sin-fines-lucro",
-                                "/api/informes/sustento-diferencias"
-                        ).hasAnyAuthority(Role.TECNICO_ADMINISTRATIVO_ALMACEN.name(), Role.ADMIN.name())
-                        .requestMatchers(
-                                HttpMethod.GET,
-                                "/api/memorandums/solicitud-designacion"
-                        ).hasAnyAuthority(
-                                Role.JEFE_UNIDAD_FINANZAS.name(),
-                                Role.TECNICO_ADMINISTRATIVO_LOGISTICA.name(),
-                                Role.ADMIN.name()
-                        )
-                        .requestMatchers(
-                                HttpMethod.POST,
-                                "/api/memorandums/solicitud-designacion"
-                        ).hasAnyAuthority(Role.TECNICO_ADMINISTRATIVO_LOGISTICA.name(), Role.ADMIN.name())
-                        .requestMatchers(
-                                HttpMethod.PUT,
-                                "/api/memorandums/solicitud-designacion/{memorandumId}"
-                        ).hasAnyAuthority(Role.TECNICO_ADMINISTRATIVO_LOGISTICA.name(), Role.ADMIN.name())
-                        .requestMatchers(
-                                HttpMethod.DELETE,
-                                "/api/memorandums/solicitud-designacion/{memorandumId}"
-                        ).hasAnyAuthority(Role.TECNICO_ADMINISTRATIVO_LOGISTICA.name(), Role.ADMIN.name())
-                        .anyRequest().hasAnyAuthority(Role.ADMIN.name())
+        return httpSecurity.csrf(AbstractHttpConfigurer::disable)
+                .cors(Customizer.withDefaults())
+                .authorizeHttpRequests(auth -> {
+                        auth.requestMatchers("/api/auth/login", "/api/auth/refresh-token").permitAll()
+                                .requestMatchers(
+                                        HttpMethod.GET,
+                                        "/api/usuarios/analistas",
+                                        "/api/memorandums/designacion/{memorandumId}",
+                                        "/api/memorandums/designacion"
+                                ).hasAnyAuthority(Role.JEFE_UNIDAD_FINANZAS.name(), Role.ADMIN.name())
+                                .requestMatchers(HttpMethod.POST, "/api/memorandums/solicitud-designacion/{memorandumId}/asignar-analista")
+                                    .hasAnyAuthority(Role.JEFE_UNIDAD_FINANZAS.name(), Role.ADMIN.name())
+                                .requestMatchers(
+                                        HttpMethod.GET,
+                                        "/api/actas/inventario",
+                                        "/api/actas/inventario/{actaId}",
+                                        "/api/informes/sustento-diferencias/{informeId}",
+                                        "/api/informes/sustento-diferencias",
+                                        "/api/memorandums/solicitud-asignacion/{memorandumId}",
+                                        "/api/memorandums/solicitud-asignacion"
+                                ).hasAnyAuthority(Role.JEFE_UNIDAD_LOGISTICA.name(), Role.ADMIN.name())
+                                .requestMatchers(HttpMethod.POST, "/api/informes/faltante")
+                                    .hasAnyAuthority(Role.JEFE_UNIDAD_LOGISTICA.name(), Role.ADMIN.name())
+                                .requestMatchers(HttpMethod.POST, "/api/actas/inventario")
+                                    .hasAnyAuthority(Role.ANALISTA_FINANZAS.name(), Role.ADMIN.name())
+                                .requestMatchers(HttpMethod.GET, "/api/memorandums/designacion")
+                                    .hasAnyAuthority(Role.ASISTENTE.name(), Role.ADMIN.name())
+                                .requestMatchers(HttpMethod.POST, "/api/memorandums/designacion")
+                                    .hasAnyAuthority(Role.ASISTENTE.name(), Role.ADMIN.name())
+                                .requestMatchers(HttpMethod.PUT, "/api/memorandums/designacion/{memorandumId}")
+                                    .hasAnyAuthority(Role.ASISTENTE.name(), Role.ADMIN.name())
+                                .requestMatchers(HttpMethod.DELETE, "/api/memorandums/designacion/{memorandumId}")
+                                    .hasAnyAuthority(Role.ASISTENTE.name(), Role.ADMIN.name())
+                                .requestMatchers(
+                                        HttpMethod.POST,
+                                        "/api/actas/entrega-productos-sin-fines-lucro",
+                                        "/api/informes/sustento-diferencias"
+                                ).hasAnyAuthority(Role.TECNICO_ADMINISTRATIVO_ALMACEN.name(), Role.ADMIN.name())
+                                .requestMatchers(HttpMethod.GET, "/api/memorandums/solicitud-designacion")
+                                .hasAnyAuthority(
+                                        Role.JEFE_UNIDAD_FINANZAS.name(),
+                                        Role.TECNICO_ADMINISTRATIVO_LOGISTICA.name(),
+                                        Role.ADMIN.name()
+                                )
+                                .requestMatchers(HttpMethod.POST, "/api/memorandums/solicitud-designacion")
+                                    .hasAnyAuthority(Role.TECNICO_ADMINISTRATIVO_LOGISTICA.name(), Role.ADMIN.name())
+                                .requestMatchers(HttpMethod.PUT, "/api/memorandums/solicitud-designacion/{memorandumId}")
+                                    .hasAnyAuthority(Role.TECNICO_ADMINISTRATIVO_LOGISTICA.name(), Role.ADMIN.name())
+                                .requestMatchers(HttpMethod.DELETE, "/api/memorandums/solicitud-designacion/{memorandumId}")
+                                    .hasAnyAuthority(Role.TECNICO_ADMINISTRATIVO_LOGISTICA.name(), Role.ADMIN.name())
+                                .anyRequest().authenticated();
+                    }
                 )
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .exceptionHandling(exception -> exception.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)))
                 .logout(logout -> logout
                         .logoutUrl("/api/auth/logout")
                         .logoutSuccessHandler((request, response, authentication) -> SecurityContextHolder.clearContext())
