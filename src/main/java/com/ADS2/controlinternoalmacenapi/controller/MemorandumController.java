@@ -49,6 +49,13 @@ public class MemorandumController {
         return ResponseEntity.ok(this.memorandumService.obtenerMemorandumDeDesignacion(memorandumId));
     }
 
+    @GetMapping(path = "/solicitud-designacion/{memorandumId}")
+    public ResponseEntity<MemorandumDetails> obtenerMemorandumDeSolicitudDeDesignacion(
+            @PathVariable("memorandumId") Long memorandumId
+    ) {
+        return ResponseEntity.ok(this.memorandumService.obtenerMemorandumDeSolicitudDeDesignacion(memorandumId));
+    }
+
     @GetMapping(path = "/solicitud-asignacion/{memorandumId}")
     public ResponseEntity<MemorandumDetails> obtenerMemorandumDeSolicitudDeAsignacion(
             @PathVariable("memorandumId") Long memorandumId

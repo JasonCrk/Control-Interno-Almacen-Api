@@ -64,6 +64,14 @@ public class MemorandumServiceImpl implements MemorandumService {
     }
 
     @Override
+    public MemorandumDetails obtenerMemorandumDeSolicitudDeDesignacion(Long memorandumId) {
+        Memorandum memorandum = this.memorandumRepository
+                .findByIdAndType(memorandumId, MemorandumType.SOLICITUD_DESIGNACION)
+                .orElseThrow(() -> new NotFoundException("El memorandum no existe"));
+        return MemorandumMapper.INSTANCE.toDetailResponse(memorandum);
+    }
+
+    @Override
     public MemorandumDetails obtenerMemorandumDeSolicitudDeAsignacion(Long memorandumId) {
         Memorandum memorandum = this.memorandumRepository
                 .findByIdAndType(memorandumId, MemorandumType.SOLICITUD_ASIGNACION)

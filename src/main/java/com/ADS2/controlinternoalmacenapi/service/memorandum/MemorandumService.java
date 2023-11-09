@@ -13,6 +13,7 @@ public interface MemorandumService {
     ListResponse<MemorandumResponse> buscarMemorandumsDeSolicitudDeDesignacion(String searchQuery);
     ListResponse<MemorandumResponse> buscarMemorandumsDeSolicitudDeAsignacion(String searchQuery);
     MemorandumDetails obtenerMemorandumDeDesignacion(Long memorandumId);
+    MemorandumDetails obtenerMemorandumDeSolicitudDeDesignacion(Long memorandumId);
     MemorandumDetails obtenerMemorandumDeSolicitudDeAsignacion(Long memorandumId);
     MessageResponse crearMemorandumDeSolicitudDeDesignacion(CrearMemorandumRequest request);
     MessageResponse crearMemorandumDeDesignacion(CrearMemorandumRequest request);
