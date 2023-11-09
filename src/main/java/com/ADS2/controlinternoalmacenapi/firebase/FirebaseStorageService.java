@@ -35,7 +35,7 @@ public class FirebaseStorageService {
         File file = fileUtils.convertToFile(multipartFile, fileName);
 
         BlobId blobId = BlobId.of(BUCKET_NAME, fileName);
-        BlobInfo blobInfo = BlobInfo.newBuilder(blobId).setContentType("application/msword").build();
+        BlobInfo blobInfo = BlobInfo.newBuilder(blobId).setContentType("application/vnd.openxmlformats-officedocument.wordprocessingml.document").build();
 
         this.storage.create(blobInfo, Files.readAllBytes(file.toPath()));
 
