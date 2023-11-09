@@ -38,12 +38,12 @@ public class SecurityConfig {
                         auth.requestMatchers("/api/auth/login", "/api/auth/refresh-token").permitAll()
                                 .requestMatchers(
                                         HttpMethod.GET,
-                                        "/api/usuarios/analistas",
-                                        "/api/memorandums/designacion/{memorandumId}",
-                                        "/api/memorandums/designacion"
+                                        "/api/usuarios/analistas"
                                 ).hasAnyAuthority(Role.JEFE_UNIDAD_FINANZAS.name(), Role.ADMIN.name())
-                                .requestMatchers(HttpMethod.POST, "/api/memorandums/solicitud-designacion/{memorandumId}/asignar-analista")
-                                    .hasAnyAuthority(Role.JEFE_UNIDAD_FINANZAS.name(), Role.ADMIN.name())
+                                .requestMatchers(
+                                        HttpMethod.POST,
+                                        "/api/memorandums/solicitud-designacion/{memorandumId}/asignar-analista"
+                                ).hasAnyAuthority(Role.JEFE_UNIDAD_FINANZAS.name(), Role.ADMIN.name())
                                 .requestMatchers(
                                         HttpMethod.GET,
                                         "/api/actas/inventario",
@@ -70,18 +70,36 @@ public class SecurityConfig {
                                         "/api/actas/entrega-productos-sin-fines-lucro",
                                         "/api/informes/sustento-diferencias"
                                 ).hasAnyAuthority(Role.TECNICO_ADMINISTRATIVO_ALMACEN.name(), Role.ADMIN.name())
-                                .requestMatchers(HttpMethod.GET, "/api/memorandums/solicitud-designacion")
+                                .requestMatchers(
+                                        HttpMethod.GET,
+                                        "/api/memorandums/solicitud-designacion",
+                                        "/api/memorandums/solicitud-designacion/{memorandumId}"
+                                )
                                 .hasAnyAuthority(
                                         Role.JEFE_UNIDAD_FINANZAS.name(),
                                         Role.TECNICO_ADMINISTRATIVO_LOGISTICA.name(),
+                                        Role.JEFE_UNIDAD_LOGISTICA.name(),
+                                        Role.ASISTENTE.name(),
                                         Role.ADMIN.name()
                                 )
                                 .requestMatchers(HttpMethod.POST, "/api/memorandums/solicitud-designacion")
-                                    .hasAnyAuthority(Role.TECNICO_ADMINISTRATIVO_LOGISTICA.name(), Role.ADMIN.name())
+                                .hasAnyAuthority(
+                                        Role.TECNICO_ADMINISTRATIVO_LOGISTICA.name(),
+                                        Role.ASISTENTE.name(),
+                                        Role.ADMIN.name()
+                                )
                                 .requestMatchers(HttpMethod.PUT, "/api/memorandums/solicitud-designacion/{memorandumId}")
-                                    .hasAnyAuthority(Role.TECNICO_ADMINISTRATIVO_LOGISTICA.name(), Role.ADMIN.name())
+                                .hasAnyAuthority(
+                                        Role.TECNICO_ADMINISTRATIVO_LOGISTICA.name(),
+                                        Role.ASISTENTE.name(),
+                                        Role.ADMIN.name()
+                                )
                                 .requestMatchers(HttpMethod.DELETE, "/api/memorandums/solicitud-designacion/{memorandumId}")
-                                    .hasAnyAuthority(Role.TECNICO_ADMINISTRATIVO_LOGISTICA.name(), Role.ADMIN.name())
+                                .hasAnyAuthority(
+                                        Role.TECNICO_ADMINISTRATIVO_LOGISTICA.name(),
+                                        Role.ASISTENTE.name(),
+                                        Role.ADMIN.name()
+                                )
                                 .anyRequest().authenticated();
                     }
                 )
