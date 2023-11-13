@@ -94,6 +94,13 @@ public class MemorandumController {
         ));
     }
 
+    @PostMapping(path = "/solicitud-designacion/{memorandumId}/aprobar")
+    public ResponseEntity<MessageResponse> aprobarMemorandumDeSolicitudDeDesignacion(
+            @PathVariable("memorandumId") Long memorandumId
+    ) {
+        return ResponseEntity.ok(this.memorandumService.aprobarMemorandumDeSolicitudDeDesignacion(memorandumId));
+    }
+
     @PutMapping(path = "/solicitud-designacion/{memorandumId}")
     public ResponseEntity<MessageResponse> editarMemorandumDeSolicitudDeDesignacion(
             @PathVariable("memorandumId") Long memorandumId,

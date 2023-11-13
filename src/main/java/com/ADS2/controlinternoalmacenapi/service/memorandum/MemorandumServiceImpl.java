@@ -6,6 +6,7 @@ import com.ADS2.controlinternoalmacenapi.exception.UnexpectedValueException;
 import com.ADS2.controlinternoalmacenapi.firebase.FirebaseStorageService;
 import com.ADS2.controlinternoalmacenapi.model.Memorandum;
 import com.ADS2.controlinternoalmacenapi.model.Usuario;
+import com.ADS2.controlinternoalmacenapi.model.enums.MemorandumStatus;
 import com.ADS2.controlinternoalmacenapi.model.enums.MemorandumType;
 import com.ADS2.controlinternoalmacenapi.model.enums.Role;
 import com.ADS2.controlinternoalmacenapi.repository.MemorandumRepository;
@@ -119,6 +120,18 @@ public class MemorandumServiceImpl implements MemorandumService {
         this.memorandumRepository.save(memorandum);
 
         return new MessageResponse("Asignación exitosa");
+    }
+
+    @Override
+    public MessageResponse aprobarMemorandumDeSolicitudDeDesignacion(Long memorandumId) {
+        Memorandum memorandum = this.memorandumRepository
+                .findByIdAndType(memorandumId, MemorandumType.SOLICITUD_DESIGNACION)
+                .orElseThrow(() -> new NotFoundException("El memorandum no existe"));
+
+        memorandum.setStatus(MemorandumStatus.APROBADO);
+        this.memorandumRepository.save(memorandum);
+
+        return new MessageResponse("El Memorandum ha sido aprobado");
     }
 
     @Override

@@ -21,6 +21,7 @@ public interface MemorandumService {
             Long memorandumId,
             AsignarAnalistaRequest request
     );
+    MessageResponse aprobarMemorandumDeSolicitudDeDesignacion(Long memorandumId);
     MessageResponse editarMemorandumDeSolicitudDeDesignacion(Long memorandumId, EditarMemorandumRequest request);
     MessageResponse editarMemorandumDeDesignacion(Long memorandumId, EditarMemorandumRequest request);
     MessageResponse elimarMemorandumDeSolicitudDeDesignacion(Long memorandumId);

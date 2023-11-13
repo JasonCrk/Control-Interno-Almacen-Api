@@ -2,8 +2,7 @@ package com.ADS2.controlinternoalmacenapi.model.enums;
 
 public enum MemorandumStatus {
     PENDIENTE("Pendiente"),
-    APROBADO("Aprobado"),
-    NO_APROBADO("No aprobado");
+    APROBADO("Aprobado");
 
     private final String name;
 

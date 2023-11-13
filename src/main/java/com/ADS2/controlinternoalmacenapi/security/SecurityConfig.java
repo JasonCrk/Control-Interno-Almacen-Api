@@ -53,7 +53,10 @@ public class SecurityConfig {
                                         "/api/memorandums/solicitud-asignacion/{memorandumId}",
                                         "/api/memorandums/solicitud-asignacion"
                                 ).hasAnyAuthority(Role.JEFE_UNIDAD_LOGISTICA.name(), Role.ADMIN.name())
-                                .requestMatchers(HttpMethod.POST, "/api/informes/faltante")
+                                .requestMatchers(HttpMethod.POST,
+                                        "/api/informes/faltante",
+                                        "/api/memorandums/solicitud-designacion/{memorandumId}/aprobado"
+                                )
                                     .hasAnyAuthority(Role.JEFE_UNIDAD_LOGISTICA.name(), Role.ADMIN.name())
                                 .requestMatchers(HttpMethod.POST, "/api/actas/inventario")
                                     .hasAnyAuthority(Role.ANALISTA_FINANZAS.name(), Role.ADMIN.name())
