@@ -18,8 +18,10 @@ public interface MemorandumMapper {
     MemorandumDetails toDetailResponse(Memorandum memorandum);
 
     @Mapping(expression = "java(memorandum.getCreatedAt().toString())", target = "createdAt")
+    @Mapping(expression = "java(memorandum.getStatus().getName())", target = "status")
     MemorandumResponse toResponse(Memorandum memorandum);
 
     @Mapping(expression = "java(memorandum.getCreatedAt().toString())", target = "createdAt")
+    @Mapping(expression = "java(memorandum.getStatus().getName())", target = "status")
     List<MemorandumResponse> toListResponse(List<Memorandum> memorandums);
 }
