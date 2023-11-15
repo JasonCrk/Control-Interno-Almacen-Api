@@ -42,32 +42,23 @@ public class SecurityConfig {
                                 ).hasAnyAuthority(Role.JEFE_UNIDAD_FINANZAS.name(), Role.ADMIN.name())
                                 .requestMatchers(
                                         HttpMethod.POST,
-                                        "/api/memorandums/solicitud-designacion/{memorandumId}/asignar-analista"
+                                        "/api/memorandums/{memorandumId}/asignar-analista",
+                                        "/api/memorandums/{memorandumId}/designacion/aprobar"
                                 ).hasAnyAuthority(Role.JEFE_UNIDAD_FINANZAS.name(), Role.ADMIN.name())
                                 .requestMatchers(
                                         HttpMethod.GET,
                                         "/api/actas/inventario",
                                         "/api/actas/inventario/{actaId}",
                                         "/api/informes/sustento-diferencias/{informeId}",
-                                        "/api/informes/sustento-diferencias",
-                                        "/api/memorandums/solicitud-asignacion/{memorandumId}",
-                                        "/api/memorandums/solicitud-asignacion"
+                                        "/api/informes/sustento-diferencias"
                                 ).hasAnyAuthority(Role.JEFE_UNIDAD_LOGISTICA.name(), Role.ADMIN.name())
                                 .requestMatchers(HttpMethod.POST,
                                         "/api/informes/faltante",
-                                        "/api/memorandums/solicitud-designacion/{memorandumId}/aprobado"
+                                        "/api/memorandums/{memorandumId}/solicitud-designacion/aprobar"
                                 )
                                     .hasAnyAuthority(Role.JEFE_UNIDAD_LOGISTICA.name(), Role.ADMIN.name())
                                 .requestMatchers(HttpMethod.POST, "/api/actas/inventario")
                                     .hasAnyAuthority(Role.ANALISTA_FINANZAS.name(), Role.ADMIN.name())
-                                .requestMatchers(HttpMethod.GET, "/api/memorandums/designacion")
-                                    .hasAnyAuthority(Role.ASISTENTE.name(), Role.ADMIN.name())
-                                .requestMatchers(HttpMethod.POST, "/api/memorandums/designacion")
-                                    .hasAnyAuthority(Role.ASISTENTE.name(), Role.ADMIN.name())
-                                .requestMatchers(HttpMethod.PUT, "/api/memorandums/designacion/{memorandumId}")
-                                    .hasAnyAuthority(Role.ASISTENTE.name(), Role.ADMIN.name())
-                                .requestMatchers(HttpMethod.DELETE, "/api/memorandums/designacion/{memorandumId}")
-                                    .hasAnyAuthority(Role.ASISTENTE.name(), Role.ADMIN.name())
                                 .requestMatchers(
                                         HttpMethod.POST,
                                         "/api/actas/entrega-productos-sin-fines-lucro",
@@ -75,8 +66,8 @@ public class SecurityConfig {
                                 ).hasAnyAuthority(Role.TECNICO_ADMINISTRATIVO_ALMACEN.name(), Role.ADMIN.name())
                                 .requestMatchers(
                                         HttpMethod.GET,
-                                        "/api/memorandums/solicitud-designacion",
-                                        "/api/memorandums/solicitud-designacion/{memorandumId}"
+                                        "/api/memorandums",
+                                        "/api/memorandums/{memorandumId}"
                                 )
                                 .hasAnyAuthority(
                                         Role.JEFE_UNIDAD_FINANZAS.name(),
@@ -85,19 +76,19 @@ public class SecurityConfig {
                                         Role.ASISTENTE.name(),
                                         Role.ADMIN.name()
                                 )
-                                .requestMatchers(HttpMethod.POST, "/api/memorandums/solicitud-designacion")
+                                .requestMatchers(HttpMethod.POST, "/api/memorandums")
                                 .hasAnyAuthority(
                                         Role.TECNICO_ADMINISTRATIVO_LOGISTICA.name(),
                                         Role.ASISTENTE.name(),
                                         Role.ADMIN.name()
                                 )
-                                .requestMatchers(HttpMethod.PUT, "/api/memorandums/solicitud-designacion/{memorandumId}")
+                                .requestMatchers(HttpMethod.PUT, "/api/memorandums/{memorandumId}")
                                 .hasAnyAuthority(
                                         Role.TECNICO_ADMINISTRATIVO_LOGISTICA.name(),
                                         Role.ASISTENTE.name(),
                                         Role.ADMIN.name()
                                 )
-                                .requestMatchers(HttpMethod.DELETE, "/api/memorandums/solicitud-designacion/{memorandumId}")
+                                .requestMatchers(HttpMethod.DELETE, "/api/memorandums/{memorandumId}")
                                 .hasAnyAuthority(
                                         Role.TECNICO_ADMINISTRATIVO_LOGISTICA.name(),
                                         Role.ASISTENTE.name(),

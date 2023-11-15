@@ -17,13 +17,11 @@ public interface MemorandumRepository extends JpaRepository<Memorandum, Long> {
 
     @Query(value = """
             SELECT m FROM Memorandum m WHERE\s
-            m.type = :type AND\s
             UPPER(m.title) LIKE UPPER(:title||'%')\s
             ORDER BY m.createdAt DESC\s
             """)
-    List<Memorandum> searchByTitleStartingWithAndTypeOrderByCreatedAtDesc(
-            @Param("title") String title,
-            @Param("type") MemorandumType type
+    List<Memorandum> searchByTitleStartingWithOrderByCreatedAtDesc(
+            @Param("title") String title
     );
 
     Optional<Memorandum> findByIdAndType(Long id, MemorandumType type);

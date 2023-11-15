@@ -15,13 +15,16 @@ public interface MemorandumMapper {
 
     @Mapping(expression = "java(memorandum.getStatus().getName())", target = "status")
     @Mapping(expression = "java(memorandum.getCreatedAt().toString())", target = "createdAt")
+    @Mapping(expression = "java(memorandum.getType().getName())", target = "type")
     MemorandumDetails toDetailResponse(Memorandum memorandum);
 
     @Mapping(expression = "java(memorandum.getCreatedAt().toString())", target = "createdAt")
     @Mapping(expression = "java(memorandum.getStatus().getName())", target = "status")
+    @Mapping(expression = "java(memorandum.getType().getName())", target = "type")
     MemorandumResponse toResponse(Memorandum memorandum);
 
     @Mapping(expression = "java(memorandum.getCreatedAt().toString())", target = "createdAt")
     @Mapping(expression = "java(memorandum.getStatus().getName())", target = "status")
+    @Mapping(expression = "java(memorandum.getType().getName())", target = "type")
     List<MemorandumResponse> toListResponse(List<Memorandum> memorandums);
 }

@@ -15,4 +15,5 @@ public class MemorandumResponse {
     private String createdAt;
     private UsuarioResponse assigned;
     private String status;
+    private String type;
 }

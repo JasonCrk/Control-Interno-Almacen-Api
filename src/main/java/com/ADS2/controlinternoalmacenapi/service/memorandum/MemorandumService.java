@@ -9,21 +9,15 @@ import com.ADS2.controlinternoalmacenapi.response.memorandum.MemorandumDetails;
 import com.ADS2.controlinternoalmacenapi.response.memorandum.MemorandumResponse;
 
 public interface MemorandumService {
-    ListResponse<MemorandumResponse> listarMemorandumsDeDesignacion();
-    ListResponse<MemorandumResponse> buscarMemorandumsDeSolicitudDeDesignacion(String searchQuery);
-    ListResponse<MemorandumResponse> buscarMemorandumsDeSolicitudDeAsignacion(String searchQuery);
-    MemorandumDetails obtenerMemorandumDeDesignacion(Long memorandumId);
-    MemorandumDetails obtenerMemorandumDeSolicitudDeDesignacion(Long memorandumId);
-    MemorandumDetails obtenerMemorandumDeSolicitudDeAsignacion(Long memorandumId);
+    ListResponse<MemorandumResponse> buscarMemorandums(String searchQuery);
+    MemorandumDetails obtenerMemorandum(Long memorandumId);
     MessageResponse crearMemorandumDeSolicitudDeDesignacion(CrearMemorandumRequest request);
-    MessageResponse crearMemorandumDeDesignacion(CrearMemorandumRequest request);
     MessageResponse asignarAnalistaAMemorandumDeSolicitudDeDesignacion(
             Long memorandumId,
             AsignarAnalistaRequest request
     );
     MessageResponse aprobarMemorandumDeSolicitudDeDesignacion(Long memorandumId);
-    MessageResponse editarMemorandumDeSolicitudDeDesignacion(Long memorandumId, EditarMemorandumRequest request);
-    MessageResponse editarMemorandumDeDesignacion(Long memorandumId, EditarMemorandumRequest request);
-    MessageResponse elimarMemorandumDeSolicitudDeDesignacion(Long memorandumId);
-    MessageResponse elimarMemorandumDeDesignacion(Long memorandumId);
+    MessageResponse aprobarMemorandumDeDesignacion(Long memorandumId);
+    MessageResponse editarMemorandum(Long memorandumId, EditarMemorandumRequest request);
+    MessageResponse elimarMemorandum(Long memorandumId);
 }

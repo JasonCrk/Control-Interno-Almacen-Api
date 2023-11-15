@@ -37,45 +37,16 @@ public class MemorandumServiceImpl implements MemorandumService {
     private final FirebaseStorageService storageService;
 
     @Override
-    public ListResponse<MemorandumResponse> listarMemorandumsDeDesignacion() {
-        List<Memorandum> memorandums = this.memorandumRepository.findByTypeOrderByCreatedAtDesc(MemorandumType.DESIGNACION);
-        return new ListResponse<>(MemorandumMapper.INSTANCE.toListResponse(memorandums));
-    }
-
-    @Override
-    public ListResponse<MemorandumResponse> buscarMemorandumsDeSolicitudDeDesignacion(String searchQuery) {
+    public ListResponse<MemorandumResponse> buscarMemorandums(String searchQuery) {
         List<Memorandum> memorandums = this.memorandumRepository
-                .searchByTitleStartingWithAndTypeOrderByCreatedAtDesc(searchQuery, MemorandumType.SOLICITUD_DESIGNACION);
+                .searchByTitleStartingWithOrderByCreatedAtDesc(searchQuery);
         return new ListResponse<>(MemorandumMapper.INSTANCE.toListResponse(memorandums));
     }
 
     @Override
-    public ListResponse<MemorandumResponse> buscarMemorandumsDeSolicitudDeAsignacion(String searchQuery) {
-        List<Memorandum> filteredMemorandums = this.memorandumRepository
-                .searchByTitleStartingWithAndTypeOrderByCreatedAtDesc(searchQuery, MemorandumType.SOLICITUD_ASIGNACION);
-        return new ListResponse<>(MemorandumMapper.INSTANCE.toListResponse(filteredMemorandums));
-    }
-
-    @Override
-    public MemorandumDetails obtenerMemorandumDeDesignacion(Long memorandumId) {
+    public MemorandumDetails obtenerMemorandum(Long memorandumId) {
         Memorandum memorandum = this.memorandumRepository
-                .findByIdAndType(memorandumId, MemorandumType.DESIGNACION)
-                .orElseThrow(() -> new NotFoundException("El memorandum no existe"));
-        return MemorandumMapper.INSTANCE.toDetailResponse(memorandum);
-    }
-
-    @Override
-    public MemorandumDetails obtenerMemorandumDeSolicitudDeDesignacion(Long memorandumId) {
-        Memorandum memorandum = this.memorandumRepository
-                .findByIdAndType(memorandumId, MemorandumType.SOLICITUD_DESIGNACION)
-                .orElseThrow(() -> new NotFoundException("El memorandum no existe"));
-        return MemorandumMapper.INSTANCE.toDetailResponse(memorandum);
-    }
-
-    @Override
-    public MemorandumDetails obtenerMemorandumDeSolicitudDeAsignacion(Long memorandumId) {
-        Memorandum memorandum = this.memorandumRepository
-                .findByIdAndType(memorandumId, MemorandumType.SOLICITUD_ASIGNACION)
+                .findById(memorandumId)
                 .orElseThrow(() -> new NotFoundException("El memorandum no existe"));
         return MemorandumMapper.INSTANCE.toDetailResponse(memorandum);
     }
@@ -91,16 +62,6 @@ public class MemorandumServiceImpl implements MemorandumService {
     }
 
     @Override
-    public MessageResponse crearMemorandumDeDesignacion(CrearMemorandumRequest request) {
-        Memorandum memorandum = new Memorandum();
-        memorandum.setType(MemorandumType.DESIGNACION);
-
-        this.saveMemorandum(memorandum, request);
-
-        return new MessageResponse("El memorandum se ha guardado exitosamente");
-    }
-
-    @Override
     public MessageResponse asignarAnalistaAMemorandumDeSolicitudDeDesignacion(
             Long memorandumId,
             AsignarAnalistaRequest request
@@ -108,6 +69,9 @@ public class MemorandumServiceImpl implements MemorandumService {
         Memorandum memorandum = this.memorandumRepository
                 .findByIdAndType(memorandumId, MemorandumType.SOLICITUD_DESIGNACION)
                 .orElseThrow(() -> new NotFoundException("El memorandum no existe"));
+
+        if (memorandum.getStatus() != MemorandumStatus.APROBADO)
+            throw new UnexpectedValueException("El memorandum aun no ha sido aprobado");
 
         if (memorandum.getAssigned() != null)
             throw new UnexpectedValueException("El memorandum ya tiene un analista asignado");
@@ -117,6 +81,8 @@ public class MemorandumServiceImpl implements MemorandumService {
                 .orElseThrow(() -> new NotFoundException("El analista no existe"));
 
         memorandum.setAssigned(analyst);
+        memorandum.setType(MemorandumType.DESIGNACION);
+        memorandum.setStatus(MemorandumStatus.PENDIENTE);
         this.memorandumRepository.save(memorandum);
 
         return new MessageResponse("Asignación exitosa");
@@ -135,7 +101,22 @@ public class MemorandumServiceImpl implements MemorandumService {
     }
 
     @Override
-    public MessageResponse editarMemorandumDeSolicitudDeDesignacion(Long memorandumId, EditarMemorandumRequest request) {
+    public MessageResponse aprobarMemorandumDeDesignacion(Long memorandumId) {
+        Memorandum memorandum = this.memorandumRepository
+                .findByIdAndType(memorandumId, MemorandumType.DESIGNACION)
+                .orElseThrow(() -> new NotFoundException("El memorandum no existe"));
+
+        if (memorandum.getStatus() != MemorandumStatus.PENDIENTE)
+            throw new UnexpectedValueException("El memorandum debe de estar en estado pendiente");
+
+        memorandum.setStatus(MemorandumStatus.APROBADO);
+        this.memorandumRepository.save(memorandum);
+
+        return new MessageResponse("El Memorandum ha sido aprobado");
+    }
+
+    @Override
+    public MessageResponse editarMemorandum(Long memorandumId, EditarMemorandumRequest request) {
         Memorandum memorandum = this.memorandumRepository
                 .findByIdAndType(memorandumId, MemorandumType.SOLICITUD_DESIGNACION)
                 .orElseThrow(() -> new NotFoundException("El memorandum no existe"));
@@ -146,31 +127,9 @@ public class MemorandumServiceImpl implements MemorandumService {
     }
 
     @Override
-    public MessageResponse editarMemorandumDeDesignacion(Long memorandumId, EditarMemorandumRequest request) {
-        Memorandum memorandum = this.memorandumRepository
-                .findByIdAndType(memorandumId, MemorandumType.DESIGNACION)
-                .orElseThrow(() -> new NotFoundException("El memorandum no existe"));
-
-        this.updateMemorandum(memorandum, request);
-
-        return new MessageResponse("Se ha editado el memorandum exitosamente");
-    }
-
-    @Override
-    public MessageResponse elimarMemorandumDeSolicitudDeDesignacion(Long memorandumId) {
+    public MessageResponse elimarMemorandum(Long memorandumId) {
         Memorandum memorandum = this.memorandumRepository
                 .findByIdAndType(memorandumId, MemorandumType.SOLICITUD_DESIGNACION)
-                .orElseThrow(() -> new NotFoundException("El memorandum no existe"));
-
-        this.memorandumRepository.delete(memorandum);
-
-        return new MessageResponse("El memorandum ha sido eliminado exitosamente");
-    }
-
-    @Override
-    public MessageResponse elimarMemorandumDeDesignacion(Long memorandumId) {
-        Memorandum memorandum = this.memorandumRepository
-                .findByIdAndType(memorandumId, MemorandumType.DESIGNACION)
                 .orElseThrow(() -> new NotFoundException("El memorandum no existe"));
 
         this.memorandumRepository.delete(memorandum);

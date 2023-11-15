@@ -23,57 +23,21 @@ public class MemorandumController {
     @Autowired
     private MemorandumService memorandumService;
 
-    @GetMapping(path = "/designacion")
-    public ResponseEntity<ListResponse<MemorandumResponse>> listarMemorandumsDeDesignacion() {
-        return ResponseEntity.ok(this.memorandumService.listarMemorandumsDeDesignacion());
-    }
-
-    @GetMapping(path = "/solicitud-designacion")
-    public ResponseEntity<ListResponse<MemorandumResponse>> buscarMemorandumsDeSolicitudDeDesignacion(
+    @GetMapping
+    public ResponseEntity<ListResponse<MemorandumResponse>> buscarMemorandums(
             @RequestParam(name = "q", required = false, defaultValue = "") String searchQuery
     ) {
-        return ResponseEntity.ok(this.memorandumService.buscarMemorandumsDeSolicitudDeDesignacion(searchQuery));
+        return ResponseEntity.ok(this.memorandumService.buscarMemorandums(searchQuery));
     }
 
-    @GetMapping(path = "/solicitud-asignacion")
-    public ResponseEntity<ListResponse<MemorandumResponse>> buscarMemorandumsDeSolicitudDeAsignacion(
-            @RequestParam(name = "q", required = false, defaultValue = "") String searchQuery
-    ) {
-        return ResponseEntity.ok(this.memorandumService.buscarMemorandumsDeSolicitudDeAsignacion(searchQuery));
-    }
-
-    @GetMapping(path = "/designacion/{memorandumId}")
-    public ResponseEntity<MemorandumDetails> obtenerMemorandumDeDesignacion(
-            @PathVariable("memorandumId") Long memorandumId
-    ) {
-        return ResponseEntity.ok(this.memorandumService.obtenerMemorandumDeDesignacion(memorandumId));
-    }
-
-    @GetMapping(path = "/solicitud-designacion/{memorandumId}")
+    @GetMapping(path = "/{memorandumId}")
     public ResponseEntity<MemorandumDetails> obtenerMemorandumDeSolicitudDeDesignacion(
             @PathVariable("memorandumId") Long memorandumId
     ) {
-        return ResponseEntity.ok(this.memorandumService.obtenerMemorandumDeSolicitudDeDesignacion(memorandumId));
+        return ResponseEntity.ok(this.memorandumService.obtenerMemorandum(memorandumId));
     }
 
-    @GetMapping(path = "/solicitud-asignacion/{memorandumId}")
-    public ResponseEntity<MemorandumDetails> obtenerMemorandumDeSolicitudDeAsignacion(
-            @PathVariable("memorandumId") Long memorandumId
-    ) {
-        return ResponseEntity.ok(this.memorandumService.obtenerMemorandumDeSolicitudDeAsignacion(memorandumId));
-    }
-
-    @PostMapping(path = "/designacion")
-    public ResponseEntity<MessageResponse> crearMemorandumDeDesignacion(
-            @Valid CrearMemorandumRequest request
-    ) {
-        return new ResponseEntity<>(
-                this.memorandumService.crearMemorandumDeDesignacion(request),
-                HttpStatus.CREATED
-        );
-    }
-
-    @PostMapping(path = "/solicitud-designacion")
+    @PostMapping
     public ResponseEntity<MessageResponse> crearMemorandumDeSolicitudDeDesignacion(
             @Valid CrearMemorandumRequest request
     ) {
@@ -83,7 +47,7 @@ public class MemorandumController {
         );
     }
 
-    @PostMapping(path = "/solicitud-designacion/{memorandumId}/asignar-analista")
+    @PostMapping(path = "/{memorandumId}/asignar-analista")
     public ResponseEntity<MessageResponse> asignarAnalistaAMemorandumDeSolicitudDeDesignacion(
             @PathVariable("memorandumId") Long memorandumId,
             @Valid @RequestBody AsignarAnalistaRequest request
@@ -94,43 +58,35 @@ public class MemorandumController {
         ));
     }
 
-    @PostMapping(path = "/solicitud-designacion/{memorandumId}/aprobar")
+    @PostMapping(path = "/{memorandumId}/solicitud-designacion/aprobar")
     public ResponseEntity<MessageResponse> aprobarMemorandumDeSolicitudDeDesignacion(
             @PathVariable("memorandumId") Long memorandumId
     ) {
         return ResponseEntity.ok(this.memorandumService.aprobarMemorandumDeSolicitudDeDesignacion(memorandumId));
     }
 
-    @PutMapping(path = "/solicitud-designacion/{memorandumId}")
+    @PostMapping(path = "/{memorandumId}/designacion/aprobar")
+    public ResponseEntity<MessageResponse> aprobarMemorandumDeDesignacion(
+            @PathVariable("memorandumId") Long memorandumId
+    ) {
+        return ResponseEntity.ok(this.memorandumService.aprobarMemorandumDeDesignacion(memorandumId));
+    }
+
+    @PutMapping(path = "/{memorandumId}")
     public ResponseEntity<MessageResponse> editarMemorandumDeSolicitudDeDesignacion(
             @PathVariable("memorandumId") Long memorandumId,
             @Valid EditarMemorandumRequest request
     ) {
-        return ResponseEntity.ok(this.memorandumService.editarMemorandumDeSolicitudDeDesignacion(
+        return ResponseEntity.ok(this.memorandumService.editarMemorandum(
                 memorandumId,
                 request
         ));
     }
 
-    @PutMapping(path = "/designacion/{memorandumId}")
-    public ResponseEntity<MessageResponse> editarMemorandumDeDesignacion(
-            @PathVariable("memorandumId") Long memorandumId,
-            @Valid EditarMemorandumRequest request
-    ) {
-        return ResponseEntity.ok(this.memorandumService.editarMemorandumDeDesignacion(memorandumId, request));
-    }
-
-    @DeleteMapping(path = "/solicitud-designacion/{memorandumId}")
+    @DeleteMapping(path = "/{memorandumId}")
     public ResponseEntity<MessageResponse> eliminarMemorandumDeSolicitudDeDesignacion(
             @PathVariable("memorandumId") Long memorandumId
     ) {
-        return ResponseEntity.ok(this.memorandumService.elimarMemorandumDeSolicitudDeDesignacion(memorandumId));
-    }
-
-    @DeleteMapping(path = "/designacion/{memorandumId}")
-    public ResponseEntity<MessageResponse> eliminarMemorandumDeDesignacion(
-            @PathVariable("memorandumId") Long memorandumId
-    ) {
-        return ResponseEntity.ok(this.memorandumService.elimarMemorandumDeDesignacion(memorandumId));
+        return ResponseEntity.ok(this.memorandumService.elimarMemorandum(memorandumId));
     }
 }

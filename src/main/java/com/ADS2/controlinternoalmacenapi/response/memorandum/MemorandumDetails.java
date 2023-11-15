@@ -13,4 +13,5 @@ public class MemorandumDetails {
     private String documentUrl;
     private String createdAt;
     private String status;
+    private String type;
 }
