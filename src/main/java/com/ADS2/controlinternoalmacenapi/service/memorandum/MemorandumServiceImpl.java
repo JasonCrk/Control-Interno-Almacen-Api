@@ -129,7 +129,7 @@ public class MemorandumServiceImpl implements MemorandumService {
     @Override
     public MessageResponse elimarMemorandum(Long memorandumId) {
         Memorandum memorandum = this.memorandumRepository
-                .findByIdAndType(memorandumId, MemorandumType.SOLICITUD_DESIGNACION)
+                .findById(memorandumId)
                 .orElseThrow(() -> new NotFoundException("El memorandum no existe"));
 
         this.memorandumRepository.delete(memorandum);

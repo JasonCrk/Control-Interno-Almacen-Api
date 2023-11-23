@@ -11,6 +11,9 @@ spring:
             ddl-auto: create-drop
         database: mysql
 
+firebase:
+    bucket-name:
+
 application:
     security:
         jwt:
